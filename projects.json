@@ -1,0 +1,25 @@
+[
+    {
+      "title": "Effect of Strike Counts on Swing",
+      "description": "Explored how attack angle, direction, and swing path tilt vary with strike counts. Using story telling to guide fans how to explore such tools.",
+      "image": "img/strike-thumb.jpg",
+      "url": "https://d2osborn.github.io/dsc106-finalproject/",
+      "tags": ["d3", "mlb", "data-viz"]
+    },
+    {
+      "title": "Balanced Meal... Not",
+      "description": "Data visualization comparing nutrition of pre-packaged meals vs. health guidelines. Winner of Best Project",
+      "image": "img/meals-thumb.jpg",
+      "url": "files/Balanced_Meal.pdf",
+      "tags": ["nutrition", "d3", "best-project"]
+    },
+    {
+      "title": "2025 Market Mega Trend",
+      "description": "how global Market will move using macro economical trend; wrote in Dec. 2024",
+      "image": "img/finance-thumb.jpg",
+      "url": "files/Mega_Trend.pdf",
+      "tags": ["finance","tools"]
+    }
+  ]
+
+  
