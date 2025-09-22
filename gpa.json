@@ -1,0 +1,58 @@
+{
+  "current_gpa": 4.0,
+  "cumulative_gpa": 3.5962,
+  "terms": [
+    {
+      "term": "Fall Qtr 2020",
+      "gpa": 2.825,
+      "term_gpa": 2.825
+    },
+    {
+      "term": "Gap-Year",
+      "gpa": null,
+      "note": "Military Service"
+    },
+    {
+      "term": "Spring Qtr 2023",
+      "gpa": 3.2875,
+      "term_gpa": 3.75
+    },
+    {
+      "term": "Fall Qtr 2023",
+      "gpa": 3.383333,
+      "term_gpa": 3.575
+    },
+    {
+      "term": "Winter Qtr 2024",
+      "gpa": 3.51875,
+      "term_gpa": 3.925
+    },
+    {
+      "term": "Spring Qtr 2024",
+      "gpa": 3.526,
+      "term_gpa": 3.56666
+    },
+    {
+      "term": "Fall Qtr 2024",
+      "gpa": 3.531,
+      "term_gpa": 3.56666
+    },
+    {
+      "term": "Winter Qtr 2025",
+      "gpa": 3.564,
+      "term_gpa": 3.8
+    },
+    {
+      "term": "Spring Qtr 2025",
+      "gpa": 3.596,
+      "term_gpa": 4.0
+    }
+  ],
+  "coursework": [
+    "Data Analysis and Inference",
+    "Mathematics Statistic–Time Series",
+    "Preparing for the CFA Exam",
+    "Probabilistic Modeling and ML",
+    "Systems for Scalable Analytics"
+  ]
+}
