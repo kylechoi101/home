@@ -72,6 +72,20 @@
     section h2{margin-top:40px}
     .notes{background:var(--panel);border:1px solid var(--grid);padding:20px;border-radius:var(--radius);margin-top:20px}
 
+    /* Research Log – weekly tabs (expandable) */
+    .research-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
+    .pill{border:1px solid var(--grid);background:var(--panel);padding:6px 10px;border-radius:999px;font-size:13px;cursor:pointer}
+    .pill[aria-current="true"]{outline:2px solid var(--accent)}
+    .pill:hover{filter:brightness(1.1)}
+    .research-actions{margin-left:auto;display:flex;gap:8px}
+    details.week{border:1px solid var(--grid);border-radius:12px;margin-top:12px;background:var(--panel)}
+    details.week[open]{box-shadow:var(--shadow)}
+    details.week > summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:center;gap:10px}
+    details.week > summary::-webkit-details-marker{display:none}
+    .chev{transition:transform .2s ease}
+    details.week[open] .chev{transform:rotate(90deg)}
+    .week-body{padding:0 16px 16px}
+
     /* Military service gap label font */
     .gap-label{
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Noto Sans", Arial, "Apple Color Emoji", "Segoe UI Emoji";
@@ -89,7 +103,7 @@
       <div><strong>Kyle Choi</strong></div>
       <div style="display:flex;gap:10px">
         <a href="#projects">Projects</a>
-        <a href="#knowledge">Finance Notes</a>
+        <a href="#research">Research Log</a>
         <a href="#contact">Contact</a>
         <button id="themeToggle" class="btn" type="button" style="margin:0" aria-pressed="false" title="Toggle theme">🌙</button>
       </div>
@@ -113,12 +127,140 @@
       <div id="projectsGrid" class="grid3"></div>
     </section>
 
-    <section id="knowledge">
-      <h2>Finance Knowledge</h2>
-      <div class="notes">
-        <h3>Incoming...</h3>
+    <section id="research">
+      <h2>Research Log</h2>
+
+      <div class="research-controls">
+        <div id="weekPills" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+        <div class="research-actions">
+          <button type="button" id="expandAll" class="pill" title="Expand all weeks">Expand all</button>
+          <button type="button" id="collapseAll" class="pill" title="Collapse all weeks">Collapse all</button>
+        </div>
+      </div>
+
+      <div id="researchLog" class="notes" style="background:transparent;border:0;padding:0;margin-top:12px">
+        <!-- Populated from research_log.json -->
       </div>
     </section>
+  <script>
+  (function(){
+    const logEl = document.getElementById('researchLog');
+    const pillsWrap = document.getElementById('weekPills');
+    const expandAllBtn = document.getElementById('expandAll');
+    const collapseAllBtn = document.getElementById('collapseAll');
+
+    if (!logEl) return;
+
+    // --- DOM helpers ---
+    function el(tag, attrs = {}, children = []){
+      const n = document.createElement(tag);
+      for (const [k,v] of Object.entries(attrs)){
+        if (k === 'class') n.className = v; else if (k === 'html') n.innerHTML = v; else n.setAttribute(k, v);
+      }
+      children.forEach(c => n.appendChild(typeof c === 'string' ? document.createTextNode(c) : c));
+      return n;
+    }
+
+    function bulletList(items){
+      const ul = el('ul');
+      (items || []).forEach(t => ul.appendChild(el('li', {}, [t])));
+      return ul;
+    }
+
+    // --- Render from JSON ---
+    function render(data){
+      const weeks = (data && Array.isArray(data.weeks)) ? data.weeks : [];
+      logEl.innerHTML = '';
+      pillsWrap.innerHTML = '';
+
+      const detailEls = [];
+
+      weeks.forEach((w, i) => {
+        const id = `week-${w.id || (i+1)}`;
+        const open = i === 0; // first week open by default
+
+        const summary = el('summary', {}, [
+          el('span', {class:'chev'}, ['▶']),
+          el('strong', {}, [`Week ${w.id || (i+1)} — ${w.title || ''}`]),
+          el('span', {style:'color:var(--muted);font-size:13px'}, [`(${w.hint || ''})`])
+        ]);
+
+        const bodyKids = [];
+        if (w.objective){
+          bodyKids.push(el('p', {}, [el('strong', {}, ['Objective: ']), w.objective]));
+        }
+        (w.sections || []).forEach(sec => {
+          if (sec.heading) bodyKids.push(el('h4', {}, [sec.heading]));
+          if (Array.isArray(sec.bullets)) bodyKids.push(bulletList(sec.bullets));
+          if (sec.html) bodyKids.push(el('div', {html: sec.html}, []));
+        });
+        if (w.next_steps && Array.isArray(w.next_steps)){
+          bodyKids.push(el('h4', {}, ['Next Steps']));
+          bodyKids.push(bulletList(w.next_steps));
+        }
+        if (w.updated){
+          bodyKids.push(el('p', {style:'color:var(--muted);margin-top:10px'}, [el('small', {}, [`Last updated: ${w.updated}`]) ]));
+        }
+
+        const details = el('details', {class:'week', id: id});
+        if (open) details.setAttribute('open', '');
+        details.appendChild(summary);
+        details.appendChild(el('div', {class:'week-body'}, bodyKids));
+        logEl.appendChild(details);
+        detailEls.push(details);
+
+        // pill
+        const pill = el('button', {type:'button', class:'pill'}, [`Week ${w.id || (i+1)}`]);
+        pill.addEventListener('click', () => {
+          details.open = true;
+          setCurrent(details.id);
+          details.scrollIntoView({behavior:'smooth', block:'start'});
+          history.replaceState(null, '', '#' + details.id);
+        });
+        pillsWrap.appendChild(pill);
+      });
+
+      function setCurrent(targetId){
+        Array.from(pillsWrap.children).forEach((el, i) => {
+          el.setAttribute('aria-current', detailEls[i].id === targetId ? 'true' : 'false');
+        });
+      }
+
+      function syncCurrent(){
+        const hash = location.hash.slice(1);
+        const found = detailEls.find(d => d.id === hash);
+        if (found){ found.open = true; setCurrent(found.id); }
+        else { setCurrent(detailEls.find(d => d.open)?.id || detailEls[0]?.id); }
+      }
+
+      // Expand / Collapse all
+      expandAllBtn?.addEventListener('click', () => detailEls.forEach(d => d.open = true));
+      collapseAllBtn?.addEventListener('click', () => detailEls.forEach(d => d.open = false));
+
+      // Update current on toggle
+      detailEls.forEach(d => d.addEventListener('toggle', () => setCurrent(d.id)));
+
+      // React to hash changes
+      window.addEventListener('hashchange', syncCurrent);
+
+      // Initial current highlight
+      syncCurrent();
+    }
+
+    // Load JSON
+    fetch('research_log.json', { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : Promise.reject(r.status))
+      .then(render)
+      .catch(err => {
+        console.warn('research_log.json not found or invalid.', err);
+        // Show a gentle message in the UI instead of hardcoded fallback content.
+        if (logEl) {
+          logEl.innerHTML = '<div class="notes" style="margin-top:12px"><em>research_log.json not found or invalid. Create one to populate your Research Log.</em></div>';
+        }
+        if (pillsWrap) pillsWrap.innerHTML = '';
+      });
+  })();
+  </script>
 
     <section id="academics" class="container">
       <h2>Academics</h2>
@@ -150,7 +292,11 @@
           <span>&#107;&#121;&#108;&#101;&#99;&#104;&#111;&#105;&#100;&#115;&#99; [at] &#103;&#109;&#97;&#105;&#108; [dot] &#99;&#111;&#109;</span>
         </noscript>
       </p>
-      <p><a href="resume.pdf" target="_blank">Download Resume</a></p>
+      <p>
+        <a href="./files/Resume_2025.pdf" target="_blank" rel="noopener">View Resume ↗</a>
+        &nbsp;|&nbsp;
+        <a href="./files/Resume_2025.pdf" download="Kyle_Choi_Resume_2025.pdf">Download Resume</a>
+      </p>
     </section>
 
   </main>

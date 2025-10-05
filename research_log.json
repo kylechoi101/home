@@ -1,0 +1,42 @@
+
+{
+  "weeks": [
+    {
+      "id": 1,
+      "title": "Data acquisition & preprocessing",
+      "hint": "Bloomberg export, file parsing",
+      "objective": "Begin data acquisition and preprocessing for financial statement analysis using Bloomberg data, aiming to build a clean dataset for quantitative modeling.",
+      "sections": [
+        {
+          "heading": "Data Access Challenges",
+          "bullets": [
+            "Attempted to use the Bloomberg API from the university lab.",
+            "Issue: ITS policy blocked Python installs and external device connections.",
+            "Workaround: Exported financial statements and key indices from the Bloomberg Terminal as Excel (.xlsx) files."
+          ]
+        },
+        {
+          "heading": "File Compatibility",
+          "bullets": [
+            "Excel/Sheets errored due to BDH formulas requiring an active Bloomberg terminal.",
+            "Converted to Apple Numbers (.numbers), which preserved the last recorded values as a static snapshot."
+          ]
+        },
+        {
+          "heading": "Parsing & Extraction",
+          "bullets": [
+            "Used a Numbers parser from GitHub to read .numbers in Python.",
+            "Initial parse produced a messy Pandas DataFrame (headers/index misaligned).",
+            "Fix: Transposed the DataFrame to obtain a clearer structure."
+          ]
+        }
+      ],
+      "next_steps": [
+        "Standardize a preprocessing pipeline from .numbers ➜ Pandas.",
+        "Clean and normalize headers, datatypes, and index across files.",
+        "Begin exploratory analysis once structure is stable."
+      ],
+      "updated": "Week 1"
+    }
+  ]
+}
