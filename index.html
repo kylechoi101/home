@@ -313,22 +313,35 @@
   };
 
   function renderGPA(gpaPayload){
-    document.getElementById('currentGPA').textContent = gpaPayload.current_gpa.toFixed(2);
-    document.getElementById('cumulativeGPA').textContent = gpaPayload.cumulative_gpa.toFixed(2);
+    // Safe formatter to prevent crash if keys are missing
+    const fmtGPA = (val) => (typeof val === 'number') ? val.toFixed(2) : '—';
+    
+    // Check for "current_gpa" or fallback to "major_gpa" if needed
+    const current = (gpaPayload.current_gpa !== undefined) ? gpaPayload.current_gpa : gpaPayload.major_gpa;
+    const cumulative = (gpaPayload.cumulative_gpa !== undefined) ? gpaPayload.cumulative_gpa : gpaPayload.overall_gpa;
+
+    document.getElementById('currentGPA').textContent = fmtGPA(current);
+    document.getElementById('cumulativeGPA').textContent = fmtGPA(cumulative);
 
     const badges = document.getElementById('courseBadges');
     badges.innerHTML = '';
-    gpaPayload.coursework.forEach(c => {
-      const li = document.createElement('li');
-      li.textContent = c;
-      li.style.border = '1px solid var(--grid)';
-      li.style.padding = '6px 10px';
-      li.style.borderRadius = '999px';
-      li.style.background = 'var(--panel)';
-      badges.appendChild(li);
-    });
+    
+    if (Array.isArray(gpaPayload.coursework)) {
+        gpaPayload.coursework.forEach(c => {
+          const li = document.createElement('li');
+          li.textContent = c;
+          li.style.border = '1px solid var(--grid)';
+          li.style.padding = '6px 10px';
+          li.style.borderRadius = '999px';
+          li.style.background = 'var(--panel)';
+          badges.appendChild(li);
+        });
+    }
 
     svg.selectAll('*').remove();
+    
+    if (!gpaPayload.terms || !Array.isArray(gpaPayload.terms)) return;
+
     const bbox = svg.node().getBoundingClientRect();
     const margin = {top: 4, right: 10, bottom: 18, left: 30};
     const w = Math.max(0, bbox.width - margin.left - margin.right);
@@ -523,6 +536,7 @@
     })
     .catch(err => {
       console.error('Failed to load gpa.json', err);
+      // Ensure UI doesn't look broken even if fetch fails
       document.getElementById('currentGPA').textContent = '—';
       document.getElementById('cumulativeGPA').textContent = '—';
     });
