@@ -72,19 +72,40 @@
     section h2{margin-top:40px}
     .notes{background:var(--panel);border:1px solid var(--grid);padding:20px;border-radius:var(--radius);margin-top:20px}
 
-    /* Research Log – weekly tabs (expandable) */
-    .research-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
-    .pill{border:1px solid var(--grid);background:var(--panel);padding:6px 10px;border-radius:999px;font-size:13px;cursor:pointer}
-    .pill[aria-current="true"]{outline:2px solid var(--accent)}
-    .pill:hover{filter:brightness(1.1)}
-    .research-actions{margin-left:auto;display:flex;gap:8px}
-    details.week{border:1px solid var(--grid);border-radius:12px;margin-top:12px;background:var(--panel)}
-    details.week[open]{box-shadow:var(--shadow)}
-    details.week > summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:center;gap:10px}
-    details.week > summary::-webkit-details-marker{display:none}
-    .chev{transition:transform .2s ease}
-    details.week[open] .chev{transform:rotate(90deg)}
-    .week-body{padding:0 16px 16px}
+    /* Equity Research List Styles */
+    .report-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .report-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--panel);
+      border: 1px solid var(--grid);
+      padding: 16px 20px;
+      border-radius: var(--radius);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .report-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+      border-color: var(--accent);
+    }
+    .report-info h3 { margin: 0 0 4px; font-size: 18px; }
+    .report-meta { font-size: 14px; color: var(--muted); display: flex; gap: 12px; }
+    .file-type { 
+      background: rgba(255, 99, 71, 0.15); 
+      color: #ff6347; 
+      padding: 2px 6px; 
+      border-radius: 4px; 
+      font-weight: 700; 
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+    .download-icon { font-size: 20px; margin-left: 16px; color: var(--accent); }
 
     /* Military service gap label font */
     .gap-label{
@@ -92,7 +113,6 @@
       font-weight: 700;
       font-size: 12px;
       letter-spacing: .2px;
-      /* SVG text color is controlled by 'fill' */
       fill: currentColor;
     }
   </style>
@@ -103,7 +123,7 @@
       <div><strong>Kyle Choi</strong></div>
       <div style="display:flex;gap:10px">
         <a href="#projects">Projects</a>
-        <a href="#research">Research Log</a>
+        <a href="#equity">Equity Research</a>
         <a href="#contact">Contact</a>
         <button id="themeToggle" class="btn" type="button" style="margin:0" aria-pressed="false" title="Toggle theme">🌙</button>
       </div>
@@ -127,140 +147,37 @@
       <div id="projectsGrid" class="grid3"></div>
     </section>
 
-    <section id="research">
-      <h2>Research Log</h2>
+    <section id="equity">
+      <h2>Equity Research</h2>
+      <p style="color:var(--muted); margin-bottom: 24px;">Deep dive fundamental analysis and valuation models.</p>
+      
+      <div class="report-list">
+        
+        <a href="./files/Mega_Trend.pdf" target="_blank" class="report-item">
+          <div class="report-info">
+            <h3>2025 Market Mega Trend</h3>
+            <div class="report-meta">
+              <span class="file-type">PDF</span>
+              <span>Dec 2024</span>
+              <span>• Macro Strategy</span>
+            </div>
+          </div>
+          <div class="download-icon">↓</div>
+        </a>
+        
+        <a href="#" class="report-item" style="opacity: 0.6; cursor: default;">
+          <div class="report-info">
+            <h3>Coming Soon: Tech Sector Analysis</h3>
+            <div class="report-meta">
+              <span class="file-type">PDF</span>
+              <span>In Progress</span>
+              <span>• Equity Valuation</span>
+            </div>
+          </div>
+        </a>
 
-      <div class="research-controls">
-        <div id="weekPills" style="display:flex;gap:8px;flex-wrap:wrap"></div>
-        <div class="research-actions">
-          <button type="button" id="expandAll" class="pill" title="Expand all weeks">Expand all</button>
-          <button type="button" id="collapseAll" class="pill" title="Collapse all weeks">Collapse all</button>
-        </div>
-      </div>
-
-      <div id="researchLog" class="notes" style="background:transparent;border:0;padding:0;margin-top:12px">
-        <!-- Populated from research_log.json -->
       </div>
     </section>
-  <script>
-  (function(){
-    const logEl = document.getElementById('researchLog');
-    const pillsWrap = document.getElementById('weekPills');
-    const expandAllBtn = document.getElementById('expandAll');
-    const collapseAllBtn = document.getElementById('collapseAll');
-
-    if (!logEl) return;
-
-    // --- DOM helpers ---
-    function el(tag, attrs = {}, children = []){
-      const n = document.createElement(tag);
-      for (const [k,v] of Object.entries(attrs)){
-        if (k === 'class') n.className = v; else if (k === 'html') n.innerHTML = v; else n.setAttribute(k, v);
-      }
-      children.forEach(c => n.appendChild(typeof c === 'string' ? document.createTextNode(c) : c));
-      return n;
-    }
-
-    function bulletList(items){
-      const ul = el('ul');
-      (items || []).forEach(t => ul.appendChild(el('li', {}, [t])));
-      return ul;
-    }
-
-    // --- Render from JSON ---
-    function render(data){
-      const weeks = (data && Array.isArray(data.weeks)) ? data.weeks : [];
-      logEl.innerHTML = '';
-      pillsWrap.innerHTML = '';
-
-      const detailEls = [];
-
-      weeks.forEach((w, i) => {
-        const id = `week-${w.id || (i+1)}`;
-        const open = i === 0; // first week open by default
-
-        const summary = el('summary', {}, [
-          el('span', {class:'chev'}, ['▶']),
-          el('strong', {}, [`Week ${w.id || (i+1)} — ${w.title || ''}`]),
-          el('span', {style:'color:var(--muted);font-size:13px'}, [`(${w.hint || ''})`])
-        ]);
-
-        const bodyKids = [];
-        if (w.objective){
-          bodyKids.push(el('p', {}, [el('strong', {}, ['Objective: ']), w.objective]));
-        }
-        (w.sections || []).forEach(sec => {
-          if (sec.heading) bodyKids.push(el('h4', {}, [sec.heading]));
-          if (Array.isArray(sec.bullets)) bodyKids.push(bulletList(sec.bullets));
-          if (sec.html) bodyKids.push(el('div', {html: sec.html}, []));
-        });
-        if (w.next_steps && Array.isArray(w.next_steps)){
-          bodyKids.push(el('h4', {}, ['Next Steps']));
-          bodyKids.push(bulletList(w.next_steps));
-        }
-        if (w.updated){
-          bodyKids.push(el('p', {style:'color:var(--muted);margin-top:10px'}, [el('small', {}, [`Last updated: ${w.updated}`]) ]));
-        }
-
-        const details = el('details', {class:'week', id: id});
-        if (open) details.setAttribute('open', '');
-        details.appendChild(summary);
-        details.appendChild(el('div', {class:'week-body'}, bodyKids));
-        logEl.appendChild(details);
-        detailEls.push(details);
-
-        // pill
-        const pill = el('button', {type:'button', class:'pill'}, [`Week ${w.id || (i+1)}`]);
-        pill.addEventListener('click', () => {
-          details.open = true;
-          setCurrent(details.id);
-          details.scrollIntoView({behavior:'smooth', block:'start'});
-          history.replaceState(null, '', '#' + details.id);
-        });
-        pillsWrap.appendChild(pill);
-      });
-
-      function setCurrent(targetId){
-        Array.from(pillsWrap.children).forEach((el, i) => {
-          el.setAttribute('aria-current', detailEls[i].id === targetId ? 'true' : 'false');
-        });
-      }
-
-      function syncCurrent(){
-        const hash = location.hash.slice(1);
-        const found = detailEls.find(d => d.id === hash);
-        if (found){ found.open = true; setCurrent(found.id); }
-        else { setCurrent(detailEls.find(d => d.open)?.id || detailEls[0]?.id); }
-      }
-
-      // Expand / Collapse all
-      expandAllBtn?.addEventListener('click', () => detailEls.forEach(d => d.open = true));
-      collapseAllBtn?.addEventListener('click', () => detailEls.forEach(d => d.open = false));
-
-      // Update current on toggle
-      detailEls.forEach(d => d.addEventListener('toggle', () => setCurrent(d.id)));
-
-      // React to hash changes
-      window.addEventListener('hashchange', syncCurrent);
-
-      // Initial current highlight
-      syncCurrent();
-    }
-
-    // Load JSON
-    fetch('research_log.json', { cache: 'no-store' })
-      .then(r => r.ok ? r.json() : Promise.reject(r.status))
-      .then(render)
-      .catch(err => {
-        console.warn('research_log.json not found or invalid.', err);
-        // Show a gentle message in the UI instead of hardcoded fallback content.
-        if (logEl) {
-          logEl.innerHTML = '<div class="notes" style="margin-top:12px"><em>research_log.json not found or invalid. Create one to populate your Research Log.</em></div>';
-        }
-        if (pillsWrap) pillsWrap.innerHTML = '';
-      });
-  })();
-  </script>
 
     <section id="academics" class="container">
       <h2>Academics</h2>
@@ -283,12 +200,12 @@
         <ul id="courseBadges" style="list-style:none;padding:0;margin:0;display:flex;gap:8px;flex-wrap:wrap"></ul>
       </div>
     </section>
+    
     <section id="contact">
       <h2>Contact</h2>
       <p id="emailWrap">
         <button id="emailBtn" class="btn" type="button">Email me</button>
         <noscript>
-          <!-- Noscript fallback: mildly obfuscated -->
           <span>&#107;&#121;&#108;&#101;&#99;&#104;&#111;&#105;&#100;&#115;&#99; [at] &#103;&#109;&#97;&#105;&#108; [dot] &#99;&#111;&#109;</span>
         </noscript>
       </p>
@@ -306,11 +223,13 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+  
   <script>
+  /* Theme Toggle Script */
   (function(){
     const root = document.documentElement;
     const btn  = document.getElementById('themeToggle');
-    const STORAGE_KEY = 'theme-preference'; // 'light' | 'dark' | null (system)
+    const STORAGE_KEY = 'theme-preference';
 
     function getSystemTheme(){
       return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
@@ -324,38 +243,34 @@
         else localStorage.removeItem(STORAGE_KEY);
       } catch(e){}
     }
-    function applyTheme(t){ // t: 'light' | 'dark' | null (system)
+    function applyTheme(t){
       if (t === 'light' || t === 'dark'){
         root.setAttribute('data-theme', t);
         btn.setAttribute('aria-pressed', t === 'dark' ? 'true' : 'false');
         btn.textContent = t === 'dark' ? '🌙' : '☀️';
       } else {
-        root.removeAttribute('data-theme'); // follow system
+        root.removeAttribute('data-theme'); 
         const sys = getSystemTheme();
         btn.setAttribute('aria-pressed', sys === 'dark' ? 'true' : 'false');
         btn.textContent = sys === 'dark' ? '🌙' : '☀️';
       }
     }
 
-    // Initial load: prefer stored theme; else follow system
-    let theme = getStoredTheme(); // 'light' | 'dark' | null
+    let theme = getStoredTheme();
     applyTheme(theme);
 
-    // If following system (no stored theme), react to system changes
     const mqLight = window.matchMedia('(prefers-color-scheme: light)');
     mqLight.addEventListener?.('change', () => {
       if (!getStoredTheme()) applyTheme(null);
     });
 
-    // Toggle click: cycle between light and dark (system default only when user clears)
     btn.addEventListener('click', () => {
       const current = root.getAttribute('data-theme') || (getStoredTheme() || null);
       const next = (current === 'dark') ? 'light' : 'dark';
       storeTheme(next);
       applyTheme(next);
     });
-
-    // Optional: hold Alt/Option while clicking to clear preference (return to system)
+    
     btn.addEventListener('click', (e) => {
       if (e.altKey){
         storeTheme(null);
@@ -364,37 +279,31 @@
     });
   })();
   </script>
-<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script>
-  // D3 render function for GPA section
+  
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  
+  <script>
+  /* GPA Sparkline Script */
   const svg = d3.select('#gpaSpark');
-
-  // --- Gap band configuration (adjust horizontally/vertically) ---
-  // mode: 'term' (single tick) or 'range' (span multiple terms)
-  // For 'term', set term: 'Gap-Year' (or any label in your gpa.json)
-  // For 'range', set fromTerm/toTerm to existing term labels.
   const GAP_CONFIG = {
-    mode: 'term',              // 'term' | 'range'
-    term: 'Gap-Year',          // used when mode === 'term'
-    fromTerm: 'Winter Qtr 2021',            // e.g., 'Fall Qtr 2021'
-    toTerm: 'Winter Qtr 2023',              // e.g., 'Fall Qtr 2023'
-    xShift: 0,                 // pixels to nudge horizontally (+right / -left)
-    yPx: 52,                   // label Y in pixels from the top of plot area
+    mode: 'term',              
+    term: 'Gap-Year',          
+    fromTerm: 'Winter Qtr 2021',            
+    toTerm: 'Winter Qtr 2023',              
+    xShift: 0,                 
+    yPx: 52,                   
     label: 'Military Service',
-    // Optional font/style overrides (leave null to use .gap-label CSS)
     labelClass: 'gap-label',
-    labelFontSize: 12,       // e.g., 13
-    labelWeight: null,         // e.g., 800
-    labelColor: null,          // e.g., '#ffd166'
-    labelFamily: null          // e.g., 'Georgia, serif'
+    labelFontSize: 12,       
+    labelWeight: null,         
+    labelColor: null,          
+    labelFamily: null          
   };
 
   function renderGPA(gpaPayload){
-    // 1) headline metrics
     document.getElementById('currentGPA').textContent = gpaPayload.current_gpa.toFixed(2);
     document.getElementById('cumulativeGPA').textContent = gpaPayload.cumulative_gpa.toFixed(2);
 
-    // 2) coursework badges
     const badges = document.getElementById('courseBadges');
     badges.innerHTML = '';
     gpaPayload.coursework.forEach(c => {
@@ -407,7 +316,6 @@
       badges.appendChild(li);
     });
 
-    // 3) sparkline (clear and redraw for responsiveness)
     svg.selectAll('*').remove();
     const bbox = svg.node().getBoundingClientRect();
     const margin = {top: 4, right: 10, bottom: 18, left: 30};
@@ -417,14 +325,13 @@
 
     const items = gpaPayload.terms.map(d => ({
       term: d.term,
-      gpa: d.gpa,                 // cumulative gpa (for the line)
-      term_gpa: d.term_gpa ?? d.termGpa ?? null, // optional per-term GPA for tooltip
+      gpa: d.gpa,                 
+      term_gpa: d.term_gpa ?? d.termGpa ?? null, 
       note: d.note
     }));
     const terms = items.map(d => d.term);
     const vals  = items.map(d => d.gpa);
 
-    // Normalize optional events array: [{ term, label }] or [{ term, label, icon }]
     const events = Array.isArray(gpaPayload.events) ? gpaPayload.events
                   : (Array.isArray(gpaPayload.awards) ? gpaPayload.awards : []);
     const eventsClean = events
@@ -437,13 +344,11 @@
 
     const x = d3.scalePoint().domain(terms).range([0, w]).padding(0.5);
 
-    // Use only numeric GPA values for y-domain to avoid NaN/null issues
     const numericVals = vals.filter(v => v != null && isFinite(v));
     const yMin = Math.min(3.0, d3.min(numericVals) - 0.05);
     const yMax = d3.max(numericVals) + 0.05;
     const y = d3.scaleLinear().domain([yMin, yMax]).nice().range([h, 0]);
 
-    // Axes
     g.append('g').attr('transform', `translate(0,${h})`)
       .call(d3.axisBottom(x).tickSize(0))
       .selectAll('text').style('font-size','10px');
@@ -452,21 +357,18 @@
       .call(d3.axisLeft(y).ticks(4).tickFormat(d3.format('.2f')).tickSize(-w))
       .selectAll('text').style('font-size','10px');
 
-    // --- Events layer (stars + labels near bottom, stacked per term) ---
     const tipSel = d3.select('#gpaTip');
     const byTerm = d3.group(eventsClean, d => d.term);
     const evGroup = g.append('g').attr('class','events');
-    const stackGap = 16; // vertical spacing between stacked events in same term
+    const stackGap = 16; 
 
     byTerm.forEach((arr, term) => {
       const cx = x(term);
       if (cx == null) return;
       arr.forEach((ev, idx) => {
         const cy = h - 8 - idx * stackGap;
-
-        // star icon (use text for crisp symbol)
         evGroup.append('text')
-          .attr('x', cx + 6)  // slight nudge right of tick
+          .attr('x', cx + 6)
           .attr('y', cy)
           .attr('dy', '0.35em')
           .attr('text-anchor', 'start')
@@ -477,7 +379,6 @@
           .style('fill', '#ffd166')
           .text(ev.icon);
 
-        // label
         evGroup.append('text')
           .attr('x', cx + 22)
           .attr('y', cy)
@@ -501,39 +402,31 @@
       });
     });
 
-    // --- Military absence band (configurable) ---
     function mid(a, b){ return (a + b) / 2; }
-
     let xLeft = null, xRight = null, gapLabel = GAP_CONFIG.label;
 
     if (GAP_CONFIG.mode === 'range' && GAP_CONFIG.fromTerm && GAP_CONFIG.toTerm) {
       const iFrom = terms.indexOf(GAP_CONFIG.fromTerm);
       const iTo   = terms.indexOf(GAP_CONFIG.toTerm);
       if (iFrom !== -1 && iTo !== -1 && iFrom <= iTo) {
-        // Left edge midway between previous tick and fromTerm (if exists), else at fromTerm
         const xFrom = x(terms[iFrom]);
         const xPrev = iFrom > 0 ? x(terms[iFrom - 1]) : xFrom - 20;
         xLeft = mid(xPrev, xFrom);
-
-        // Right edge midway between toTerm and next tick (if exists), else at toTerm
         const xTo = x(terms[iTo]);
         const xNext = iTo < terms.length - 1 ? x(terms[iTo + 1]) : xTo + 20;
         xRight = mid(xTo, xNext);
       }
     } else {
-      // Fallback to single term mode (auto-detect if not provided)
       const gapIdx = (()=>{
         if (GAP_CONFIG.term) {
           const idx = terms.indexOf(GAP_CONFIG.term);
           if (idx !== -1) return idx;
         }
-        // auto-detect by note containing 'military'
         const idxAuto = items.findIndex(d => d.note && /military/i.test(d.note));
         return idxAuto;
       })();
 
       if (gapIdx >= 0) {
-        // Prefer explicit GAP_CONFIG.label; fall back to the note in data if label is not set.
         gapLabel = (GAP_CONFIG.label ?? '').trim() || items[gapIdx].note || gapLabel;
         const xThis = x(terms[gapIdx]);
         const xPrev = gapIdx > 0 ? x(terms[gapIdx - 1]) : xThis - 20;
@@ -564,14 +457,9 @@
         .attr('class', GAP_CONFIG.labelClass || null)
         .text(gapLabel);
 
-      // Optional JS overrides if provided in GAP_CONFIG
       if (GAP_CONFIG.labelFontSize) labelText.style('font-size', GAP_CONFIG.labelFontSize + 'px');
-      if (GAP_CONFIG.labelWeight)   labelText.style('font-weight', String(GAP_CONFIG.labelWeight));
-      if (GAP_CONFIG.labelColor)    labelText.attr('fill', GAP_CONFIG.labelColor);
-      if (GAP_CONFIG.labelFamily)   labelText.style('font-family', GAP_CONFIG.labelFamily);
     }
 
-    // Line (skip nulls)
     const line = d3.line()
       .defined((d) => d.gpa != null && isFinite(d.gpa))
       .x((d) => x(d.term))
@@ -585,7 +473,6 @@
       .attr('stroke-width',2)
       .attr('d', line);
 
-    // Dots only for numeric cumulative values (with tooltip showing term GPA if provided)
     const dots = g.selectAll('circle.gpa-dot')
       .data(items.filter(d => d.gpa != null && isFinite(d.gpa)))
       .join('circle')
@@ -595,7 +482,6 @@
       .attr('r', 3.5)
       .attr('fill','#6aa6ff');
 
-    // (tipSel already declared above)
     function fmt(v){ return (v == null || !isFinite(v)) ? '—' : v.toFixed(2); }
 
     dots
@@ -608,7 +494,6 @@
         tipSel.html(html).style('opacity', 1);
       })
       .on('mousemove', function(evt){
-        // position relative to page cursor
         tipSel.style('left', (evt.pageX + 14) + 'px')
               .style('top',  (evt.pageY - 14) + 'px');
       })
@@ -617,7 +502,6 @@
       });
   }
 
-  // Load data and render; re-render on resize
   fetch('gpa.json')
     .then(r => r.json())
     .then(payload => {
@@ -627,97 +511,87 @@
     })
     .catch(err => {
       console.error('Failed to load gpa.json', err);
-      // Graceful fallback
       document.getElementById('currentGPA').textContent = '—';
       document.getElementById('cumulativeGPA').textContent = '—';
     });
-
-</script>
-
-</script>
-
-<script>
-(function(){
-  const grid = document.getElementById('projectsGrid');
-  const filter = document.getElementById('tagFilter');
-
-  function cardHTML(p){
-    const tags = (p.tags || []).map(t => `<span style="border:1px solid var(--grid);padding:2px 8px;border-radius:999px;font-size:12px;color:var(--muted)">${t}</span>`).join(' ');
-    return `
-      <article class="card">
-        <img src="${p.image}" alt="${p.alt || p.title}">
-        <div class="card-content">
-          <div>
-            <h3>${p.title}</h3>
-            <p>${p.description || ''}</p>
-            ${p.tags && p.tags.length ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">${tags}</div>` : ''}
-          </div>
-          <a href="${p.url || '#'}" target="_blank" class="btn">${p.cta || 'View Project ↗'}</a>
-        </div>
-      </article>
-    `;
-  }
-
-  function render(projects, tag='all'){
-    grid.innerHTML = '';
-    projects
-      .filter(p => tag === 'all' || (p.tags || []).includes(tag))
-      .forEach(p => { grid.insertAdjacentHTML('beforeend', cardHTML(p)); });
-  }
-
-  function populateTags(projects){
-    const tags = Array.from(new Set(projects.flatMap(p => p.tags || []))).sort();
-    tags.forEach(t => {
-      const opt = document.createElement('option');
-      opt.value = t; opt.textContent = t;
-      filter.appendChild(opt);
-    });
-  }
-
-  function init(projects){
-    populateTags(projects);
-    render(projects);
-    filter.addEventListener('change', () => render(projects, filter.value));
-  }
-
-  const fallback = [
-    {
-      "title": "Effect of Strike Counts on Swing",
-      "description": "Explored how attack angle, direction, and swing path tilt vary with strike counts. Found flatter attack angles after two strikes, suggesting a contact approach.",
-      "image": "img/strike-thumb.jpg",
-      "url": "https://d2osborn.github.io/dsc106-finalproject/",
-      "tags": ["d3","mlb","data-viz"]
-    },
-    {
-      "title": "Balanced Meal... Not",
-      "description": "Interactive viz comparing nutrition of pre-packaged meals vs. healthy guidelines. Winner of Best Project in DSC106.",
-      "image": "img/meals-thumb.jpg",
-      "url": "#",
-      "tags": ["nutrition","d3","best-project"]
-    },
-    {
-      "title": "2025 Market Mega Trend",
-      "description": "how global Market will move using macro economical trend; wrote in Dec. 2024",
-      "image": "img/finance-thumb.jpg",
-      "url": "files/Mega_Trend.pdf",
-      "tags": ["finance","tools"]
-    }
-  ];
-
-  fetch('projects.json')
-    .then(r => r.ok ? r.json() : Promise.reject(r.status))
-    .then(init)
-    .catch(() => init(fallback));
-})();
-</script>
-
-<div id="gpaTip" style="position:absolute; pointer-events:none; opacity:0; background:rgba(15,22,33,0.96); color:#e8eefc; border:1px solid #1f2a3a; border-radius:10px; padding:8px 10px; font-size:12px; box-shadow:0 8px 28px rgba(0,0,0,.25); transform:translate(-50%,-120%); z-index:1000;"></div>
+  </script>
 
   <script>
+  /* Projects Script */
   (function(){
-    // Build "kylechoidsc@gmail.com" without exposing it in the HTML
-    const codesUser = [107,121,108,101,99,104,111,105,100,115,99];   // "kylechoidsc"
-    const codesHost = [103,109,97,105,108,46,99,111,109];            // "gmail.com"
+    const grid = document.getElementById('projectsGrid');
+    const filter = document.getElementById('tagFilter');
+
+    function cardHTML(p){
+      const tags = (p.tags || []).map(t => `<span style="border:1px solid var(--grid);padding:2px 8px;border-radius:999px;font-size:12px;color:var(--muted)">${t}</span>`).join(' ');
+      return `
+        <article class="card">
+          <img src="${p.image}" alt="${p.alt || p.title}">
+          <div class="card-content">
+            <div>
+              <h3>${p.title}</h3>
+              <p>${p.description || ''}</p>
+              ${p.tags && p.tags.length ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">${tags}</div>` : ''}
+            </div>
+            <a href="${p.url || '#'}" target="_blank" class="btn">${p.cta || 'View Project ↗'}</a>
+          </div>
+        </article>
+      `;
+    }
+
+    function render(projects, tag='all'){
+      grid.innerHTML = '';
+      projects
+        .filter(p => tag === 'all' || (p.tags || []).includes(tag))
+        .forEach(p => { grid.insertAdjacentHTML('beforeend', cardHTML(p)); });
+    }
+
+    function populateTags(projects){
+      const tags = Array.from(new Set(projects.flatMap(p => p.tags || []))).sort();
+      tags.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t; opt.textContent = t;
+        filter.appendChild(opt);
+      });
+    }
+
+    function init(projects){
+      populateTags(projects);
+      render(projects);
+      filter.addEventListener('change', () => render(projects, filter.value));
+    }
+
+    const fallback = [
+      {
+        "title": "Effect of Strike Counts on Swing",
+        "description": "Explored how attack angle, direction, and swing path tilt vary with strike counts.",
+        "image": "img/strike-thumb.jpg",
+        "url": "https://d2osborn.github.io/dsc106-finalproject/",
+        "tags": ["d3","mlb","data-viz"]
+      },
+      {
+        "title": "2025 Market Mega Trend",
+        "description": "Macro economic trend analysis.",
+        "image": "img/finance-thumb.jpg",
+        "url": "files/Mega_Trend.pdf",
+        "tags": ["finance","tools"]
+      }
+    ];
+
+    fetch('projects.json')
+      .then(r => r.ok ? r.json() : Promise.reject(r.status))
+      .then(init)
+      .catch(() => init(fallback));
+  })();
+  </script>
+
+  <div id="gpaTip" style="position:absolute; pointer-events:none; opacity:0; background:rgba(15,22,33,0.96); color:#e8eefc; border:1px solid #1f2a3a; border-radius:10px; padding:8px 10px; font-size:12px; box-shadow:0 8px 28px rgba(0,0,0,.25); transform:translate(-50%,-120%); z-index:1000;"></div>
+
+  <script>
+  /* Email Obfuscation */
+  (function(){
+    const codesUser = [107,121,108,101,99,104,111,105,100,115,99];   
+    const codesHost = [103,109,97,105,108,46,99,111,109];            
     const user = String.fromCharCode.apply(null, codesUser);
     const host = String.fromCharCode.apply(null, codesHost);
     const addr = user + '@' + host;
@@ -725,13 +599,11 @@
     const btn = document.getElementById('emailBtn');
     if (!btn) return;
 
-    // Optional: preset subject/body
     const subject = encodeURIComponent('');
     const body = encodeURIComponent('');
     const href = 'mailto:' + addr + '?subject=' + subject + '&body=' + body;
 
     btn.addEventListener('click', function(){
-      // Create a temporary anchor to trigger mail client
       const a = document.createElement('a');
       a.href = href;
       a.rel = 'noopener';
@@ -740,7 +612,6 @@
       a.remove();
     });
 
-    // Accessibility label so screen readers announce the address
     btn.setAttribute('aria-label', 'Email ' + user + ' at gmail dot com');
   })();
   </script>

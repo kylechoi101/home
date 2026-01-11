@@ -1,6 +1,6 @@
 {
-  "current_gpa": 4.0,
-  "cumulative_gpa": 3.5962,
+  "Major_gpa": 3.758,
+  "Cumulative_gpa": 3.603,
   "terms": [
     {
       "term": "Fall Qtr 2020",
@@ -46,6 +46,11 @@
       "term": "Spring Qtr 2025",
       "gpa": 3.596,
       "term_gpa": 4.0
+    },
+    {
+      "term": "Fall Qtr 2025",
+      "gpa": 3.603,
+      "term_gpa": 3.666
     }
   ],
   "coursework": [
@@ -53,6 +58,7 @@
     "Mathematics Statistic–Time Series",
     "Preparing for the CFA Exam",
     "Probabilistic Modeling and ML",
-    "Systems for Scalable Analytics"
+    "Systems for Scalable Analytics",
+    "Recommender System and Web Mining"
   ]
 }
