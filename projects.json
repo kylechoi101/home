@@ -19,6 +19,13 @@
       "image": "img/finance-thumb.jpg",
       "url": "files/Mega_Trend.pdf",
       "tags": ["finance","tools"]
+    },
+    {
+      "title": "HMM Stock Analysis",
+      "description": "Bottom up research for HMM to assess possible investment opportunity due to NSR expansion.",
+      "image": "img/HMM.jpg",
+      "url": "files/HMM.pdf",
+      "tags": ["finance","maritime"]
     }
   ]
 
