@@ -11,7 +11,7 @@
       "description": "Data visualization comparing nutrition of pre-packaged meals vs. health guidelines. Winner of Best Project",
       "image": "img/meals-thumb.jpg",
       "url": "files/Balanced_Meal.pdf",
-      "tags": ["nutrition", "d3", "best-project"]
+      "tags": ["nutrition", "data-viz", "best-project"]
     },
     {
       "title": "2025 Market Mega Trend",
