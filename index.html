@@ -3,293 +3,397 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Kyle Choi · Portfolio</title>
-  <meta name="description" content="Portfolio of Kyle Choi — data science, finance, D3.js, and interactive web projects." />
+  <title>Kyle Choi · Data Science & Finance</title>
+  <meta name="description" content="Portfolio of Kyle Choi — Data Science, Finance, D3.js, and interactive web projects." />
   <meta property="og:title" content="Kyle Choi · Portfolio" />
-  <meta property="og:description" content="Data science + finance + D3.js projects" />
+  <meta property="og:description" content="Data Science + Finance + Interactive Projects" />
   <meta property="og:type" content="website" />
   <meta name="theme-color" content="#0b0f14" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <style>
-    /* Theme variables */
-    :root{
-      --radius:16px;
-      --shadow:0 8px 28px rgba(0,0,0,.25);
-      /* default placeholders; real values set by [data-theme] below */
-      --bg:#0b0f14; --panel:#0f1621; --ink:#e8eefc; --muted:#9bb0d4; --grid:#1f2a3a; --accent:#6aa6ff; --accent2:#7bdaff;
+    /* Theme variables - Refined for a more premium feel */
+    :root {
+      --radius: 20px;
+      --radius-sm: 12px;
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.2);
+      --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      /* Default to dark mode placeholders */
+      --bg: #090c10;
+      --bg-glass: rgba(9, 12, 16, 0.7);
+      --panel: #111823;
+      --panel-hover: #161f2e;
+      --ink: #f0f6fc;
+      --muted: #8b9cb6;
+      --grid: #1f2a3a;
+      --accent: #58a6ff;
+      --accent-hover: #79c0ff;
+      --accent-gradient: linear-gradient(135deg, #58a6ff 0%, #3182ce 100%);
     }
-    /* Dark theme (matches your current design) */
-    :root[data-theme="dark"]{
-      --bg:#0b0f14;
-      --panel:#0f1621;
-      --ink:#e8eefc;
-      --muted:#9bb0d4;
-      --grid:#1f2a3a;
-      --accent:#6aa6ff;
-      --accent2:#7bdaff;
-    }
-    /* Light theme */
-    :root[data-theme="light"]{
-      --bg:#f6f8fb;
-      --panel:#ffffff;
-      --ink:#0b0f14;
-      --muted:#4a5a75;
-      --grid:#e5ebf5;
-      --accent:#2b6cb0;
-      --accent2:#3182ce;
-    }
-    /* Respect system preference by default */
-    @media (prefers-color-scheme: light){
-      :root:not([data-theme]){ /* only when user hasn't chosen */
-        --bg:#f6f8fb; --panel:#ffffff; --ink:#0b0f14; --muted:#4a5a75; --grid:#e5ebf5; --accent:#2b6cb0; --accent2:#3182ce;
-      }
-    }
-    @media (prefers-color-scheme: dark){
-      :root:not([data-theme]){ /* only when user hasn't chosen */
-        --bg:#0b0f14; --panel:#0f1621; --ink:#e8eefc; --muted:#9bb0d4; --grid:#1f2a3a; --accent:#6aa6ff; --accent2:#7bdaff;
-      }
-    }
-    /* Smooth theme transitions */
-    html, body, .card, .notes, .metric, .spark-wrap {
-      transition: background-color .25s, color .25s, border-color .25s;
-    }
-    body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Noto Sans",Arial}
-    a{color:var(--accent);text-decoration:none}
-    a:hover{text-decoration:underline}
-    .container{max-width:1000px;margin:auto;padding:24px}
-    header{position:sticky;top:0;background:var(--bg);backdrop-filter:blur(10px);z-index:10}
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 24px}
-    .nav a{padding:8px 10px;border-radius:10px}
-    .hero{padding:40px 24px;text-align:center}
-    .hero h1{margin:0 0 .5rem;font-size:clamp(28px,5vw,42px)}
-    .hero p{color:var(--muted)}
-    .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:24px}
-    .card{background:var(--panel);border:1px solid var(--grid);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
-    .card img{width:100%;aspect-ratio:16/9;object-fit:cover}
-    .card-content{padding:16px;flex:1;display:flex;flex-direction:column;justify-content:space-between}
-    .card h3{margin:.2rem 0 .4rem}
-    .btn{display:inline-block;margin-top:8px;padding:8px 12px;border-radius:10px;background:var(--accent);color:#001b33;font-weight:600;text-align:center}
-    section h2{margin-top:40px}
-    .notes{background:var(--panel);border:1px solid var(--grid);padding:20px;border-radius:var(--radius);margin-top:20px}
 
-    /* Equity Research List Styles */
-    .report-list {
+    :root[data-theme="dark"] {
+      --bg: #090c10;
+      --bg-glass: rgba(9, 12, 16, 0.7);
+      --panel: #111823;
+      --panel-hover: #161f2e;
+      --ink: #f0f6fc;
+      --muted: #8b9cb6;
+      --grid: #1f2a3a;
+      --accent: #58a6ff;
+      --accent-hover: #79c0ff;
+      --accent-gradient: linear-gradient(135deg, #58a6ff 0%, #3182ce 100%);
+    }
+
+    :root[data-theme="light"] {
+      --bg: #f8fafc;
+      --bg-glass: rgba(248, 250, 252, 0.8);
+      --panel: #ffffff;
+      --panel-hover: #f1f5f9;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --grid: #e2e8f0;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root:not([data-theme]) {
+        --bg: #f8fafc; --bg-glass: rgba(248, 250, 252, 0.8); --panel: #ffffff; --panel-hover: #f1f5f9; --ink: #0f172a; --muted: #64748b; --grid: #e2e8f0; --accent: #2563eb; --accent-hover: #1d4ed8; --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05); --shadow: 0 10px 30px rgba(0, 0, 0, 0.08); --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+      }
+    }
+
+    /* Global Reset & Base */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: var(--accent-hover); }
+
+    /* Layout & Containers */
+    .container { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+    
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      background: var(--bg-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 100;
+      border-bottom: 1px solid var(--grid);
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .nav-brand { font-weight: 700; font-size: 1.25rem; letter-spacing: -0.02em; color: var(--ink); }
+    .nav-links { display: flex; gap: 20px; align-items: center; }
+    .nav-links a { color: var(--muted); font-weight: 500; font-size: 0.95rem; }
+    .nav-links a:hover { color: var(--ink); }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: var(--panel);
+      color: var(--ink);
+      border: 1px solid var(--grid);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn:hover { background: var(--panel-hover); border-color: var(--accent); transform: translateY(-1px); }
+    .btn-primary { background: var(--accent-gradient); color: #fff; border: none; box-shadow: var(--shadow-sm); }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: var(--shadow); color: #fff; }
+
+    /* Hero Section */
+    .hero {
+      padding: 100px 0 80px;
+      text-align: center;
+      animation: fadeUp 0.8s ease-out;
+    }
+    .hero h1 {
+      margin: 0 0 1rem;
+      font-size: clamp(36px, 6vw, 56px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: clamp(18px, 2.5vw, 22px);
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* Sections */
+    section { padding: 60px 0; }
+    .section-header { margin-bottom: 40px; }
+    .section-title { font-size: 2rem; font-weight: 700; margin: 0 0 8px; letter-spacing: -0.02em; }
+    .section-subtitle { color: var(--muted); font-size: 1.1rem; margin: 0; }
+
+    /* Projects Grid */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; }
+    
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--grid);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      margin-top: 24px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      text-decoration: none;
+      color: inherit;
     }
+    .card:hover { transform: translateY(-6px); box-shadow: var(--shadow-hover); border-color: var(--accent); }
+    .card-img { width: 100%; aspect-ratio: 16/10; object-fit: cover; border-bottom: 1px solid var(--grid); }
+    .card-content { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+    .card-title { margin: 0 0 8px; font-size: 1.25rem; font-weight: 600; color: var(--ink); }
+    .card-desc { color: var(--muted); font-size: 0.95rem; margin-bottom: 20px; flex: 1; }
+    .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; }
+    .tag { padding: 4px 10px; border-radius: 999px; background: rgba(88, 166, 255, 0.1); color: var(--accent); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* Filter Controls */
+    .filter-wrap { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
+    .filter-select { appearance: none; padding: 8px 36px 8px 16px; border-radius: 999px; background: var(--panel) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%238b9cb6"><path d="M4 6l4 4 4-4z"/></svg>') no-repeat right 12px center; border: 1px solid var(--grid); color: var(--ink); font-family: inherit; font-size: 0.9rem; cursor: pointer; transition: border-color 0.2s; }
+    .filter-select:hover, .filter-select:focus { border-color: var(--accent); outline: none; }
+
+    /* Equity Research List */
+    .report-list { display: flex; flex-direction: column; gap: 16px; }
     .report-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
       background: var(--panel);
       border: 1px solid var(--grid);
-      padding: 16px 20px;
+      padding: 20px 24px;
       border-radius: var(--radius);
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      color: inherit;
     }
-    .report-item:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow);
-      border-color: var(--accent);
-    }
-    .report-info h3 { margin: 0 0 4px; font-size: 18px; }
-    .report-meta { font-size: 14px; color: var(--muted); display: flex; gap: 12px; }
-    .file-type { 
-      background: rgba(255, 99, 71, 0.15); 
-      color: #ff6347; 
-      padding: 2px 6px; 
-      border-radius: 4px; 
-      font-weight: 700; 
-      font-size: 12px;
-      text-transform: uppercase;
-    }
-    .download-icon { font-size: 20px; margin-left: 16px; color: var(--accent); }
+    .report-item:hover { transform: translateX(4px); box-shadow: var(--shadow); border-color: var(--accent); }
+    .report-item.disabled { opacity: 0.5; pointer-events: none; }
+    .report-info h3 { margin: 0 0 6px; font-size: 1.15rem; font-weight: 600; }
+    .report-meta { display: flex; align-items: center; gap: 12px; font-size: 0.85rem; color: var(--muted); font-weight: 500; }
+    .file-badge { background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .report-icon { color: var(--muted); transition: color 0.2s; }
+    .report-item:hover .report-icon { color: var(--accent); }
 
-    /* Military service gap label font */
-    .gap-label{
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Noto Sans", Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      font-weight: 700;
-      font-size: 12px;
-      letter-spacing: .2px;
-      fill: currentColor;
+    /* Academics */
+    .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 24px; }
+    .metric-card { background: var(--panel); border: 1px solid var(--grid); padding: 24px; border-radius: var(--radius); text-align: center; }
+    .metric-label { color: var(--muted); font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+    .metric-value { font-size: 2.5rem; font-weight: 800; color: var(--ink); line-height: 1; }
+    
+    .chart-container { background: var(--panel); border: 1px solid var(--grid); border-radius: var(--radius); padding: 24px; }
+    .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .chart-title { font-weight: 600; font-size: 1.1rem; margin: 0; }
+    
+    .coursework { margin-top: 32px; }
+    .coursework h3 { font-size: 1.1rem; margin-bottom: 16px; }
+    .course-list { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; margin: 0; }
+    .course-item { background: var(--panel); border: 1px solid var(--grid); padding: 8px 16px; border-radius: 999px; font-size: 0.9rem; font-weight: 500; color: var(--muted); }
+
+    /* Contact & Footer */
+    .contact-actions { display: flex; gap: 16px; align-items: center; margin-top: 24px; }
+    footer { border-top: 1px solid var(--grid); padding: 40px 0; text-align: center; color: var(--muted); font-size: 0.9rem; margin-top: 80px; }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
+    
+    /* GPA Sparkline Styles */
+    .gap-label { font-family: var(--font-sans); font-weight: 600; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; fill: var(--muted); }
   </style>
 </head>
 <body>
   <header>
-    <nav class="nav container">
-      <div><strong>Kyle Choi</strong></div>
-      <div style="display:flex;gap:10px">
-        <a href="#projects">Projects</a>
-        <a href="#equity">Equity Research</a>
-        <a href="#contact">Contact</a>
-        <button id="themeToggle" class="btn" type="button" style="margin:0" aria-pressed="false" title="Toggle theme">🌙</button>
+    <div class="container nav">
+      <a href="#" class="nav-brand">Kyle Choi</a>
+      <div class="nav-links">
+        <a href="#projects">Work</a>
+        <a href="#equity">Research</a>
+        <a href="#academics">Academics</a>
+        <button id="themeToggle" class="btn" style="padding: 8px; border-radius: 50%; width: 36px; height: 36px; border:none; background: transparent; color: var(--ink);" aria-pressed="false" title="Toggle theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
       </div>
-    </nav>
+    </div>
   </header>
 
-  <main class="container">
-    <section class="hero">
-      <h1>Data Science × Finance </h1>
-      <p>I turn messy data into clear stories — from MLB swings to portfolio valuation.</p>
+  <main>
+    <section class="container hero">
+      <h1>Data Science × Finance</h1>
+      <p>I transform complex datasets into compelling narratives—from MLB swing mechanics to macro-economic portfolio valuation.</p>
+      <div class="contact-actions" style="justify-content: center; margin-top: 32px;">
+        <button id="emailBtn" class="btn btn-primary">Get in Touch</button>
+        <a href="./files/Resume.pdf" target="_blank" class="btn">View Resume</a>
+      </div>
     </section>
 
-    <section id="projects">
-      <h2>Featured Projects</h2>
-      <div style="display:flex;align-items:center;gap:10px;margin-top:8px">
-        <small style="color:var(--muted)">Filter:</small>
-        <select id="tagFilter" class="btn" aria-label="Filter projects by tag">
-          <option value="all">All</option>
+    <section id="projects" class="container">
+      <div class="section-header">
+        <h2 class="section-title">Featured Projects</h2>
+        <p class="section-subtitle">A selection of my recent data science and visualization work.</p>
+      </div>
+      
+      <div class="filter-wrap">
+        <span style="color:var(--muted); font-size: 0.9rem; font-weight: 500;">Filter by topic:</span>
+        <select id="tagFilter" class="filter-select" aria-label="Filter projects by tag">
+          <option value="all">All Projects</option>
         </select>
       </div>
-      <div id="projectsGrid" class="grid3"></div>
+      
+      <div id="projectsGrid" class="grid"></div>
     </section>
 
-    <section id="equity">
-      <h2>Equity Research</h2>
-      <p style="color:var(--muted); margin-bottom: 24px;">Deep dive fundamental analysis and valuation models.</p>
+    <section id="equity" class="container">
+      <div class="section-header">
+        <h2 class="section-title">Equity Research</h2>
+        <p class="section-subtitle">Deep dive fundamental analysis and valuation models.</p>
+      </div>
       
       <div class="report-list">
-        
         <a href="./files/Mega_Trend.pdf" target="_blank" class="report-item">
           <div class="report-info">
             <h3>2025 Market Mega Trend</h3>
             <div class="report-meta">
-              <span class="file-type">PDF</span>
+              <span class="file-badge">PDF</span>
               <span>Dec 2024</span>
               <span>• Macro Strategy</span>
             </div>
           </div>
-          <div class="download-icon">↓</div>
+          <svg class="report-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
         
         <a href="./files/HMM.pdf" target="_blank" class="report-item">
           <div class="report-info">
             <h3>HMM Equity Research</h3>
             <div class="report-meta">
-              <span class="file-type">PDF</span>
+              <span class="file-badge">PDF</span>
               <span>Jan 2026</span>
-              <span>• Bottom Up</span>
+              <span>• Bottom-up Fundamental</span>
             </div>
           </div>
-          <div class="download-icon">↓</div>
+          <svg class="report-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
 
-        <a href="#" class="report-item" style="opacity: 0.6; cursor: default;">
+        <div class="report-item disabled">
           <div class="report-info">
-            <h3>Coming Soon: Tech Sector Analysis</h3>
+            <h3>Tech Sector Analysis</h3>
             <div class="report-meta">
-              <span class="file-type">PDF</span>
-              <span>In Progress</span>
+              <span class="file-badge" style="background:var(--grid); color:var(--muted);">Draft</span>
+              <span>Coming Soon</span>
               <span>• Equity Valuation</span>
             </div>
           </div>
-        </a>
-
+        </div>
       </div>
     </section>
 
     <section id="academics" class="container">
-      <h2>Academics</h2>
-      <div class="gpa-cards" style="display:flex;gap:16px;flex-wrap:wrap;margin-top:10px">
-        <div class="metric" style="flex:1;min-width:220px;background:var(--panel);border:1px solid var(--grid);border-radius:16px;padding:16px">
-          <div style="color:var(--muted);font-weight:600">Major GPA</div>
-          <div id="currentGPA" style="font-size:28px;font-weight:800">—</div>
-        </div>
-        <div class="metric" style="flex:1;min-width:220px;background:var(--panel);border:1px solid var(--grid);border-radius:16px;padding:16px">
-          <div style="color:var(--muted);font-weight:600">Cumulative GPA</div>
-          <div id="cumulativeGPA" style="font-size:28px;font-weight:800">—</div>
-        </div>
+      <div class="section-header">
+        <h2 class="section-title">Academic Excellence</h2>
+        <p class="section-subtitle">Quantitative foundation built through rigorous coursework.</p>
       </div>
-      <div class="spark-wrap" style="margin-top:14px;background:var(--panel);border:1px solid var(--grid);border-radius:16px;padding:12px">
-        <strong style="display:block;margin-bottom:6px">GPA by Term</strong>
-        <svg id="gpaSpark" width="100%" height="120" role="img" aria-label="GPA by term sparkline"></svg>
-      </div>
-      <div class="notes" style="margin-top:16px">
-        <h3 style="margin-top:0">Important Coursework</h3>
-        <ul id="courseBadges" style="list-style:none;padding:0;margin:0;display:flex;gap:8px;flex-wrap:wrap"></ul>
-      </div>
-    </section>
-    
-    <section id="contact">
-      <h2>Contact</h2>
-      <p id="emailWrap">
-        <button id="emailBtn" class="btn" type="button">Email me</button>
-        <noscript>
-          <span>&#107;&#121;&#108;&#101;&#99;&#104;&#111;&#105;&#100;&#115;&#99; [at] &#103;&#109;&#97;&#105;&#108; [dot] &#99;&#111;&#109;</span>
-        </noscript>
-      </p>
-      <p>
-        <a href="./files/Resume.pdf" target="_blank" rel="noopener">View Resume ↗</a>
-        &nbsp;|&nbsp;
-        <a href="./files/Resume.pdf" download="Kyle_Choi_Resume.pdf">Download Resume</a>
-      </p>
-    </section>
 
+      <div class="metrics">
+        <div class="metric-card">
+          <div class="metric-label">Major GPA</div>
+          <div id="currentGPA" class="metric-value">—</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Cumulative GPA</div>
+          <div id="cumulativeGPA" class="metric-value">—</div>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <div class="chart-header">
+          <h3 class="chart-title">Academic Performance Trend</h3>
+        </div>
+        <svg id="gpaSpark" width="100%" height="180" role="img" aria-label="GPA trend over terms"></svg>
+      </div>
+
+      <div class="coursework">
+        <h3>Selected Coursework</h3>
+        <ul id="courseBadges" class="course-list"></ul>
+      </div>
+    </section>
   </main>
 
-  <footer class="container" style="color:var(--muted);margin-top:40px">© <span id="year"></span> Kyle Choi</footer>
+  <footer>
+    <div class="container">
+      <p>© <span id="year"></span> Kyle Choi. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <div id="gpaTip" style="position:absolute; pointer-events:none; opacity:0; background:var(--panel); color:var(--ink); border:1px solid var(--grid); border-radius:var(--radius-sm); padding:12px 16px; font-size:0.85rem; box-shadow:var(--shadow); transform:translate(-50%,-120%); z-index:1000; transition: opacity 0.2s;"></div>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
-  
-  <script>
-  /* Theme Toggle Script */
-  (function(){
-    const root = document.documentElement;
-    const btn  = document.getElementById('themeToggle');
-    const STORAGE_KEY = 'theme-preference';
 
-    function getSystemTheme(){
-      return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-    }
-    function getStoredTheme(){
-      try { return localStorage.getItem(STORAGE_KEY); } catch(e){ return null; }
-    }
-    function storeTheme(t){
-      try {
-        if (t) localStorage.setItem(STORAGE_KEY, t);
-        else localStorage.removeItem(STORAGE_KEY);
-      } catch(e){}
-    }
-    function applyTheme(t){
-      if (t === 'light' || t === 'dark'){
-        root.setAttribute('data-theme', t);
-        btn.setAttribute('aria-pressed', t === 'dark' ? 'true' : 'false');
-        btn.textContent = t === 'dark' ? '🌙' : '☀️';
-      } else {
-        root.removeAttribute('data-theme'); 
-        const sys = getSystemTheme();
-        btn.setAttribute('aria-pressed', sys === 'dark' ? 'true' : 'false');
-        btn.textContent = sys === 'dark' ? '🌙' : '☀️';
+    /* Theme Toggle */
+    (function(){
+      const root = document.documentElement;
+      const btn = document.getElementById('themeToggle');
+      const STORAGE_KEY = 'theme-preference';
+
+      const iconSun = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+      const iconMoon = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
+
+      function applyTheme(t) {
+        if (t === 'light' || t === 'dark') {
+          root.setAttribute('data-theme', t);
+        } else {
+          root.removeAttribute('data-theme');
+          t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        btn.innerHTML = t === 'dark' ? iconSun : iconMoon;
       }
-    }
 
-    let theme = getStoredTheme();
-    applyTheme(theme);
+      let theme = localStorage.getItem(STORAGE_KEY);
+      applyTheme(theme);
 
-    const mqLight = window.matchMedia('(prefers-color-scheme: light)');
-    mqLight.addEventListener?.('change', () => {
-      if (!getStoredTheme()) applyTheme(null);
-    });
-
-    btn.addEventListener('click', () => {
-      const current = root.getAttribute('data-theme') || (getStoredTheme() || null);
-      const next = (current === 'dark') ? 'light' : 'dark';
-      storeTheme(next);
-      applyTheme(next);
-    });
-    
-    btn.addEventListener('click', (e) => {
-      if (e.altKey){
-        storeTheme(null);
-        applyTheme(null);
-      }
-    });
-  })();
+      btn.addEventListener('click', () => {
+        let current = root.getAttribute('data-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        let next = current === 'dark' ? 'light' : 'dark';
+        localStorage.setItem(STORAGE_KEY, next);
+        applyTheme(next);
+      });
+    })();
   </script>
   
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
@@ -298,25 +402,14 @@
   /* GPA Sparkline Script */
   const svg = d3.select('#gpaSpark');
   const GAP_CONFIG = {
-    mode: 'term',              
-    term: 'Gap-Year',          
-    fromTerm: 'Winter Qtr 2021',            
-    toTerm: 'Winter Qtr 2023',              
-    xShift: 0,                 
-    yPx: 52,                   
+    mode: 'term', term: 'Gap-Year',
+    xShift: 0, yPx: 20,
     label: 'Military Service',
-    labelClass: 'gap-label',
-    labelFontSize: 12,       
-    labelWeight: null,         
-    labelColor: null,          
-    labelFamily: null          
+    labelClass: 'gap-label'
   };
 
   function renderGPA(gpaPayload){
-    // Safe formatter to prevent crash if keys are missing
     const fmtGPA = (val) => (typeof val === 'number') ? val.toFixed(2) : '—';
-    
-    // Check for "current_gpa" or fallback to "major_gpa" if needed
     const current = (gpaPayload.current_gpa !== undefined) ? gpaPayload.current_gpa : gpaPayload.major_gpa;
     const cumulative = (gpaPayload.cumulative_gpa !== undefined) ? gpaPayload.cumulative_gpa : gpaPayload.overall_gpa;
 
@@ -325,164 +418,75 @@
 
     const badges = document.getElementById('courseBadges');
     badges.innerHTML = '';
-    
     if (Array.isArray(gpaPayload.coursework)) {
         gpaPayload.coursework.forEach(c => {
           const li = document.createElement('li');
+          li.className = 'course-item';
           li.textContent = c;
-          li.style.border = '1px solid var(--grid)';
-          li.style.padding = '6px 10px';
-          li.style.borderRadius = '999px';
-          li.style.background = 'var(--panel)';
           badges.appendChild(li);
         });
     }
 
     svg.selectAll('*').remove();
-    
     if (!gpaPayload.terms || !Array.isArray(gpaPayload.terms)) return;
 
     const bbox = svg.node().getBoundingClientRect();
-    const margin = {top: 4, right: 10, bottom: 18, left: 30};
+    const margin = {top: 10, right: 10, bottom: 24, left: 30};
     const w = Math.max(0, bbox.width - margin.left - margin.right);
     const h = Math.max(0, bbox.height - margin.top - margin.bottom);
     const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
 
-    const items = gpaPayload.terms.map(d => ({
-      term: d.term,
-      gpa: d.gpa,                 
-      term_gpa: d.term_gpa ?? d.termGpa ?? null, 
-      note: d.note
-    }));
+    const items = gpaPayload.terms.map(d => ({ term: d.term, gpa: d.gpa, term_gpa: d.term_gpa ?? d.termGpa ?? null, note: d.note }));
     const terms = items.map(d => d.term);
-    const vals  = items.map(d => d.gpa);
-
-    const events = Array.isArray(gpaPayload.events) ? gpaPayload.events
-                  : (Array.isArray(gpaPayload.awards) ? gpaPayload.awards : []);
-    const eventsClean = events
-      .map(e => ({
-        term: e.term,
-        label: e.label || e.name || e.title || 'Event',
-        icon: e.icon || '★'
-      }))
-      .filter(e => e.term && terms.includes(e.term));
+    const vals = items.map(d => d.gpa);
 
     const x = d3.scalePoint().domain(terms).range([0, w]).padding(0.5);
-
     const numericVals = vals.filter(v => v != null && isFinite(v));
     const yMin = Math.min(3.0, d3.min(numericVals) - 0.05);
     const yMax = d3.max(numericVals) + 0.05;
     const y = d3.scaleLinear().domain([yMin, yMax]).nice().range([h, 0]);
 
-    g.append('g').attr('transform', `translate(0,${h})`)
-      .call(d3.axisBottom(x).tickSize(0))
-      .selectAll('text').style('font-size','10px');
+    // Format ticks text color properly via currentColor or specific var
+    const xAxis = g.append('g').attr('transform', `translate(0,${h})`)
+      .call(d3.axisBottom(x).tickSize(0).tickFormat(d => {
+        let parts = d.split(' ');
+        return parts.length > 1 ? parts[0][0] + ' \\'' + parts[parts.length-1].slice(-2) : d;
+      }));
+    xAxis.select('.domain').attr('stroke', 'var(--grid)');
+    xAxis.selectAll('text').style('font-family', 'var(--font-sans)').style('fill', 'var(--muted)').style('font-size', '10px');
 
-    g.append('g')
-      .call(d3.axisLeft(y).ticks(4).tickFormat(d3.format('.2f')).tickSize(-w))
-      .selectAll('text').style('font-size','10px');
+    const yAxis = g.append('g').call(d3.axisLeft(y).ticks(4).tickFormat(d3.format('.2f')).tickSize(-w));
+    yAxis.select('.domain').remove();
+    yAxis.selectAll('.tick line').attr('stroke', 'var(--grid)').attr('stroke-dasharray', '2,2');
+    yAxis.selectAll('text').style('font-family', 'var(--font-sans)').style('fill', 'var(--muted)').style('font-size', '10px');
 
     const tipSel = d3.select('#gpaTip');
-    const byTerm = d3.group(eventsClean, d => d.term);
-    const evGroup = g.append('g').attr('class','events');
-    const stackGap = 16; 
 
-    byTerm.forEach((arr, term) => {
-      const cx = x(term);
-      if (cx == null) return;
-      arr.forEach((ev, idx) => {
-        const cy = h - 8 - idx * stackGap;
-        evGroup.append('text')
-          .attr('x', cx + 6)
-          .attr('y', cy)
-          .attr('dy', '0.35em')
-          .attr('text-anchor', 'start')
-          .style('font-size', '14px')
-          .style('paint-order','stroke')
-          .style('stroke', 'rgba(0,0,0,0.55)')
-          .style('stroke-width', '2px')
-          .style('fill', '#ffd166')
-          .text(ev.icon);
-
-        evGroup.append('text')
-          .attr('x', cx + 22)
-          .attr('y', cy)
-          .attr('dy', '0.35em')
-          .attr('text-anchor', 'start')
-          .style('font-size', '11px')
-          .style('fill', 'currentColor')
-          .text(ev.label)
-          .on('mouseenter', function(evt) {
-            tipSel
-              .html(`<div style="font-weight:700;margin-bottom:2px">${term}</div><div>${ev.label}</div>`)
-              .style('opacity', 1);
-          })
-          .on('mousemove', function(evt) {
-            tipSel.style('left', (evt.pageX + 14) + 'px')
-                  .style('top',  (evt.pageY - 14) + 'px');
-          })
-          .on('mouseleave', function() {
-            tipSel.style('opacity', 0);
-          });
-      });
-    });
-
-    function mid(a, b){ return (a + b) / 2; }
-    let xLeft = null, xRight = null, gapLabel = GAP_CONFIG.label;
-
-    if (GAP_CONFIG.mode === 'range' && GAP_CONFIG.fromTerm && GAP_CONFIG.toTerm) {
-      const iFrom = terms.indexOf(GAP_CONFIG.fromTerm);
-      const iTo   = terms.indexOf(GAP_CONFIG.toTerm);
-      if (iFrom !== -1 && iTo !== -1 && iFrom <= iTo) {
-        const xFrom = x(terms[iFrom]);
-        const xPrev = iFrom > 0 ? x(terms[iFrom - 1]) : xFrom - 20;
-        xLeft = mid(xPrev, xFrom);
-        const xTo = x(terms[iTo]);
-        const xNext = iTo < terms.length - 1 ? x(terms[iTo + 1]) : xTo + 20;
-        xRight = mid(xTo, xNext);
-      }
-    } else {
-      const gapIdx = (()=>{
-        if (GAP_CONFIG.term) {
-          const idx = terms.indexOf(GAP_CONFIG.term);
-          if (idx !== -1) return idx;
-        }
-        const idxAuto = items.findIndex(d => d.note && /military/i.test(d.note));
-        return idxAuto;
-      })();
-
-      if (gapIdx >= 0) {
-        gapLabel = (GAP_CONFIG.label ?? '').trim() || items[gapIdx].note || gapLabel;
-        const xThis = x(terms[gapIdx]);
-        const xPrev = gapIdx > 0 ? x(terms[gapIdx - 1]) : xThis - 20;
-        const xNext = gapIdx < terms.length - 1 ? x(terms[gapIdx + 1]) : xThis + 20;
-        xLeft  = mid(xPrev, xThis);
-        xRight = mid(xThis, xNext);
-      }
-    }
-
-    if (xLeft != null && xRight != null) {
-      xLeft  += (GAP_CONFIG.xShift || 0);
-      xRight += (GAP_CONFIG.xShift || 0);
+    // Military Gap rendering
+    const gapIdx = terms.indexOf(GAP_CONFIG.term);
+    if (gapIdx >= 0) {
+      const xThis = x(terms[gapIdx]);
+      const xPrev = gapIdx > 0 ? x(terms[gapIdx - 1]) : xThis - 20;
+      const xNext = gapIdx < terms.length - 1 ? x(terms[gapIdx + 1]) : xThis + 20;
+      const xLeft = (xPrev + xThis) / 2;
+      const xRight = (xThis + xNext) / 2;
 
       g.append('rect')
         .attr('x', xLeft)
         .attr('y', 0)
         .attr('width', Math.max(10, xRight - xLeft))
         .attr('height', h)
-        .attr('fill', 'currentColor')
-        .attr('opacity', 0.08)
-        .attr('stroke', '#ffd166')
+        .attr('fill', 'var(--accent)')
+        .attr('opacity', 0.05)
+        .attr('stroke', 'var(--accent)')
         .attr('stroke-dasharray', '4,3');
 
-      const labelText = g.append('text')
-        .attr('x', mid(xLeft, xRight))
-        .attr('y', GAP_CONFIG.yPx || 14)
+      g.append('text')
+        .attr('x', (xLeft + xRight) / 2)
+        .attr('y', GAP_CONFIG.yPx)
         .attr('text-anchor', 'middle')
-        .attr('class', GAP_CONFIG.labelClass || null)
-        .text(gapLabel);
-
-      if (GAP_CONFIG.labelFontSize) labelText.style('font-size', GAP_CONFIG.labelFontSize + 'px');
+        .attr('class', GAP_CONFIG.labelClass)
+        .text(GAP_CONFIG.label);
     }
 
     const line = d3.line()
@@ -493,9 +497,9 @@
 
     g.append('path')
       .datum(items)
-      .attr('fill','none')
-      .attr('stroke','#7bdaff')
-      .attr('stroke-width',2)
+      .attr('fill', 'none')
+      .attr('stroke', 'var(--accent)')
+      .attr('stroke-width', 3)
       .attr('d', line);
 
     const dots = g.selectAll('circle.gpa-dot')
@@ -504,42 +508,39 @@
       .attr('class', 'gpa-dot')
       .attr('cx', d => x(d.term))
       .attr('cy', d => y(d.gpa))
-      .attr('r', 3.5)
-      .attr('fill','#6aa6ff');
+      .attr('r', 5)
+      .attr('fill', 'var(--bg)')
+      .attr('stroke', 'var(--accent)')
+      .attr('stroke-width', 2)
+      .style('cursor', 'pointer')
+      .style('transition', 'r 0.2s');
 
     function fmt(v){ return (v == null || !isFinite(v)) ? '—' : v.toFixed(2); }
 
     dots
       .on('mouseenter', function(evt, d){
+        d3.select(this).attr('r', 7).attr('fill', 'var(--accent)');
         const html = `
-          <div style="font-weight:700;margin-bottom:2px">${d.term}</div>
-          <div><span style="color:#9bb0d4">Term GPA:</span> ${fmt(d.term_gpa)}</div>
-          <div><span style="color:#9bb0d4">Cumulative:</span> ${fmt(d.gpa)}</div>
+          <div style="font-weight:700;margin-bottom:6px;font-size:1rem;color:var(--ink)">${d.term}</div>
+          <div style="display:flex;justify-content:space-between;gap:16px"><span style="color:var(--muted)">Term GPA</span> <span style="font-weight:600">${fmt(d.term_gpa)}</span></div>
+          <div style="display:flex;justify-content:space-between;gap:16px"><span style="color:var(--muted)">Cumulative</span> <span style="font-weight:600">${fmt(d.gpa)}</span></div>
         `;
         tipSel.html(html).style('opacity', 1);
       })
       .on('mousemove', function(evt){
-        tipSel.style('left', (evt.pageX + 14) + 'px')
-              .style('top',  (evt.pageY - 14) + 'px');
+        tipSel.style('left', (evt.pageX) + 'px').style('top', (evt.pageY - 20) + 'px');
       })
       .on('mouseleave', function(){
+        d3.select(this).attr('r', 5).attr('fill', 'var(--bg)');
         tipSel.style('opacity', 0);
       });
   }
 
-  fetch('gpa.json')
-    .then(r => r.json())
-    .then(payload => {
-      renderGPA(payload);
-      const ro = new ResizeObserver(() => renderGPA(payload));
-      ro.observe(svg.node());
-    })
-    .catch(err => {
-      console.error('Failed to load gpa.json', err);
-      // Ensure UI doesn't look broken even if fetch fails
-      document.getElementById('currentGPA').textContent = '—';
-      document.getElementById('cumulativeGPA').textContent = '—';
-    });
+  fetch('gpa.json').then(r => r.json()).then(payload => {
+    renderGPA(payload);
+    const ro = new ResizeObserver(() => renderGPA(payload));
+    ro.observe(svg.node());
+  }).catch(err => console.error('Failed to load gpa.json', err));
   </script>
 
   <script>
@@ -549,19 +550,16 @@
     const filter = document.getElementById('tagFilter');
 
     function cardHTML(p){
-      const tags = (p.tags || []).map(t => `<span style="border:1px solid var(--grid);padding:2px 8px;border-radius:999px;font-size:12px;color:var(--muted)">${t}</span>`).join(' ');
+      const tags = (p.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
       return `
-        <article class="card">
-          <img src="${p.image}" alt="${p.alt || p.title}">
+        <a href="${p.url || '#'}" target="_blank" class="card">
+          <img class="card-img" src="${p.image}" alt="${p.alt || p.title}" loading="lazy">
           <div class="card-content">
-            <div>
-              <h3>${p.title}</h3>
-              <p>${p.description || ''}</p>
-              ${p.tags && p.tags.length ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">${tags}</div>` : ''}
-            </div>
-            <a href="${p.url || '#'}" target="_blank" class="btn">${p.cta || 'View Project ↗'}</a>
+            <h3 class="card-title">${p.title}</h3>
+            <p class="card-desc">${p.description || ''}</p>
+            ${p.tags && p.tags.length ? `<div class="tags">${tags}</div>` : ''}
           </div>
-        </article>
+        </a>
       `;
     }
 
@@ -572,73 +570,34 @@
         .forEach(p => { grid.insertAdjacentHTML('beforeend', cardHTML(p)); });
     }
 
-    function populateTags(projects){
+    function init(projects){
       const tags = Array.from(new Set(projects.flatMap(p => p.tags || []))).sort();
       tags.forEach(t => {
         const opt = document.createElement('option');
-        opt.value = t; opt.textContent = t;
+        opt.value = t; opt.textContent = t.charAt(0).toUpperCase() + t.slice(1);
         filter.appendChild(opt);
       });
-    }
-
-    function init(projects){
-      populateTags(projects);
       render(projects);
       filter.addEventListener('change', () => render(projects, filter.value));
     }
 
-    const fallback = [
-      {
-        "title": "Effect of Strike Counts on Swing",
-        "description": "Explored how attack angle, direction, and swing path tilt vary with strike counts.",
-        "image": "img/strike-thumb.jpg",
-        "url": "https://d2osborn.github.io/dsc106-finalproject/",
-        "tags": ["d3","mlb","data-viz"]
-      },
-      {
-        "title": "2025 Market Mega Trend",
-        "description": "Macro economic trend analysis.",
-        "image": "img/finance-thumb.jpg",
-        "url": "files/Mega_Trend.pdf",
-        "tags": ["finance","tools"]
-      }
-    ];
-
     fetch('projects.json')
       .then(r => r.ok ? r.json() : Promise.reject(r.status))
       .then(init)
-      .catch(() => init(fallback));
+      .catch(console.error);
   })();
   </script>
-
-  <div id="gpaTip" style="position:absolute; pointer-events:none; opacity:0; background:rgba(15,22,33,0.96); color:#e8eefc; border:1px solid #1f2a3a; border-radius:10px; padding:8px 10px; font-size:12px; box-shadow:0 8px 28px rgba(0,0,0,.25); transform:translate(-50%,-120%); z-index:1000;"></div>
 
   <script>
   /* Email Obfuscation */
   (function(){
     const codesUser = [107,121,108,101,99,104,111,105,100,115,99];   
     const codesHost = [103,109,97,105,108,46,99,111,109];            
-    const user = String.fromCharCode.apply(null, codesUser);
-    const host = String.fromCharCode.apply(null, codesHost);
-    const addr = user + '@' + host;
-
+    const addr = String.fromCharCode(...codesUser) + '@' + String.fromCharCode(...codesHost);
     const btn = document.getElementById('emailBtn');
-    if (!btn) return;
-
-    const subject = encodeURIComponent('');
-    const body = encodeURIComponent('');
-    const href = 'mailto:' + addr + '?subject=' + subject + '&body=' + body;
-
-    btn.addEventListener('click', function(){
-      const a = document.createElement('a');
-      a.href = href;
-      a.rel = 'noopener';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    });
-
-    btn.setAttribute('aria-label', 'Email ' + user + ' at gmail dot com');
+    if (btn) {
+      btn.addEventListener('click', () => { window.location.href = 'mailto:' + addr; });
+    }
   })();
   </script>
 </body>
