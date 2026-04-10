@@ -484,8 +484,6 @@
       yAxis.selectAll('.tick line').attr('stroke', 'var(--grid)').attr('stroke-dasharray', '2,2');
       yAxis.selectAll('text').style('font-family', 'var(--font-sans)').style('fill', 'var(--muted)').style('font-size', '10px');
 
-      const tipSel = d3.select('#gpaTip');
-
       const gapIdx = terms.indexOf(GAP_CONFIG.term);
       if (gapIdx >= 0) {
         const xThis = x(terms[gapIdx]);
