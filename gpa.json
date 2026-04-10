@@ -54,11 +54,13 @@
     }
   ],
   "coursework": [
-    "Data Analysis and Inference",
-    "Mathematics Statistic–Time Series",
-    "Preparing for the CFA Exam",
-    "Probabilistic Modeling and ML",
+    "Data Science Project I & II",
+    "Representation Learning",
+    "Mathematics of Finance",
+    "Econometrics A/B/C",
     "Systems for Scalable Analytics",
-    "Recommender System and Web Mining"
+    "Probabilistic Modeling and ML",
+    "Data Analysis and Inference",
+    "Recommender Sys & Web Mining"
   ]
 }
