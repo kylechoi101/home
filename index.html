@@ -417,6 +417,8 @@
       document.getElementById('currentGPA').textContent = fmtGPA(current);
       document.getElementById('cumulativeGPA').textContent = fmtGPA(cumulative);
 
+      const tipSel = d3.select('#gpaTip');
+
       const badges = document.getElementById('courseBadges');
       badges.innerHTML = '';
       if (Array.isArray(gpaPayload.coursework)) {
@@ -427,8 +429,19 @@
               li.textContent = c;
             } else {
               li.textContent = c.name;
-              li.title = c.desc;
               li.style.cursor = 'help';
+              
+              li.addEventListener('mouseenter', (evt) => {
+                const html = `<div style="font-weight:600;margin-bottom:4px;color:var(--ink)">${c.name}</div>
+                              <div style="color:var(--muted);max-width:250px;white-space:normal;line-height:1.4;">${c.desc}</div>`;
+                tipSel.html(html).style('opacity', 1);
+              });
+              li.addEventListener('mousemove', (evt) => {
+                tipSel.style('left', (evt.pageX) + 'px').style('top', (evt.pageY - 20) + 'px');
+              });
+              li.addEventListener('mouseleave', () => {
+                tipSel.style('opacity', 0);
+              });
             }
             badges.appendChild(li);
           });
