@@ -54,13 +54,37 @@
     }
   ],
   "coursework": [
-    "Data Science Project I & II",
-    "Representation Learning",
-    "Mathematics of Finance",
-    "Econometrics A/B/C",
-    "Systems for Scalable Analytics",
-    "Probabilistic Modeling and ML",
-    "Data Analysis and Inference",
-    "Recommender Sys & Web Mining"
+    {
+      "name": "Data Science Project I & II",
+      "desc": "Two-quarter capstone sequence focusing on a comprehensive data science project, from problem definition to final presentation."
+    },
+    {
+      "name": "Representation Learning",
+      "desc": "Explores machine learning techniques for learning suitable representations from data, covering PCA, CNNs, RNNs, and aspects of deep learning."
+    },
+    {
+      "name": "Mathematics of Finance",
+      "desc": "Examination of the mathematics of basic derivative securities in financial markets, applying linear algebra and probability to financial modeling."
+    },
+    {
+      "name": "Econometrics A/B/C",
+      "desc": "Rigorous sequence in econometrics covering probability, statistics, multiple regression, and advanced methods for cross-sectional and panel data."
+    },
+    {
+      "name": "Systems for Scalable Analytics",
+      "desc": "Focuses on the principles of scalable data systems, distributed computing, and the practical implementation of data-intensive analytics."
+    },
+    {
+      "name": "Probabilistic Modeling and ML",
+      "desc": "An introduction to machine learning from a probabilistic perspective, covering generative models, Bayesian inference, and foundational algorithms."
+    },
+    {
+      "name": "Data Analysis and Inference",
+      "desc": "Comprehensive study of statistical inference and data analysis techniques with an emphasis on mathematical foundations."
+    },
+    {
+      "name": "Recommender Sys & Web Mining",
+      "desc": "Covers current methods for data mining and predictive analytics, focusing on recommender systems, text mining, and network analysis."
+    }
   ]
 }

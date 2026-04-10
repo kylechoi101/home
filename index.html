@@ -423,7 +423,13 @@
           gpaPayload.coursework.forEach(c => {
             const li = document.createElement('li');
             li.className = 'course-item';
-            li.textContent = c;
+            if (typeof c === 'string') {
+              li.textContent = c;
+            } else {
+              li.textContent = c.name;
+              li.title = c.desc;
+              li.style.cursor = 'help';
+            }
             badges.appendChild(li);
           });
       }
