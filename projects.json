@@ -1,30 +1,37 @@
 [
-    {
-      "title": "Effect of Strike Counts on Swing",
-      "description": "Explored the variation in attack angle, direction, and swing path tilt across different strike counts, using data storytelling to engage and educate baseball fans.",
-      "image": "img/strike-thumb.jpg",
-      "url": "https://d2osborn.github.io/dsc106-finalproject/",
-      "tags": ["d3", "mlb", "data-viz"]
-    },
-    {
-      "title": "Balanced Meal... Not",
-      "description": "A comparative data visualization analyzing the nutritional value of pre-packaged meals against standard health guidelines. Awarded Best Project.",
-      "image": "img/meals-thumb.jpg",
-      "url": "files/Balanced_Meal.pdf",
-      "tags": ["nutrition", "data-viz", "best-project"]
-    },
-    {
-      "title": "2025 Market Mega Trend",
-      "description": "Comprehensive macro-economic trend analysis forecasting global market movements for the upcoming year.",
-      "image": "img/finance-thumb.jpg",
-      "url": "files/Mega_Trend.pdf",
-      "tags": ["finance", "tools"]
-    },
-    {
-      "title": "HMM Stock Analysis",
-      "description": "Bottom-up fundamental research on HMM to evaluate investment opportunities driven by Northern Sea Route (NSR) expansion.",
-      "image": "img/HMM.jpg",
-      "url": "files/HMM.pdf",
-      "tags": ["finance", "maritime"]
-    }
+  {
+    "title": "Credit Analysis Agentic Workflow",
+    "description": "Engineered a Cash Scoring XGBoost model achieving 86% ROC-AUC and an automated Agentic Workflow for feature creation. Built a transformer model to categorize bank statements with 95% accuracy.",
+    "image": "img/finance-thumb.jpg",
+    "url": "#",
+    "tags": ["machine-learning", "finance", "nlp", "ai-agents"]
+  },
+  {
+    "title": "Effect of Strike Counts on Swing",
+    "description": "Full-stack data analysis from preprocessing to panel data regression. Built an interactive website with 3D models and narrative elements to communicate MLB swing mechanics to non-technical viewers.",
+    "image": "img/strike-thumb.jpg",
+    "url": "https://d2osborn.github.io/dsc106-finalproject/",
+    "tags": ["d3", "mlb", "data-viz", "full-stack"]
+  },
+  {
+    "title": "Balanced Meal... Not",
+    "description": "A comparative data visualization analyzing the nutritional value of pre-packaged meals against standard health guidelines. Awarded Best Project.",
+    "image": "img/meals-thumb.jpg",
+    "url": "files/Balanced_Meal.pdf",
+    "tags": ["nutrition", "data-viz", "best-project"]
+  },
+  {
+    "title": "2025 Market Mega Trend",
+    "description": "Comprehensive macro-economic trend analysis forecasting global market movements for the upcoming year.",
+    "image": "img/finance-thumb.jpg",
+    "url": "files/Mega_Trend.pdf",
+    "tags": ["finance", "tools"]
+  },
+  {
+    "title": "HMM Stock Analysis",
+    "description": "Bottom-up fundamental research on HMM to evaluate investment opportunities driven by Northern Sea Route (NSR) expansion.",
+    "image": "img/HMM.jpg",
+    "url": "files/HMM.pdf",
+    "tags": ["finance", "maritime"]
+  }
 ]
