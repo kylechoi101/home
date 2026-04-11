@@ -3,7 +3,10 @@
     "title": "Credit Analysis Agentic Workflow",
     "description": "Engineered a Cash Scoring XGBoost model achieving 86% ROC-AUC and an automated Agentic Workflow for feature creation. Built a transformer model to categorize bank statements with 95% accuracy.",
     "image": "img/poster-thumb.jpg",
-    "url": "files/report_prism.pdf",
+    "links": [
+      { "name": "Report", "url": "files/report_prism.pdf" },
+      { "name": "Poster", "url": "files/B01-2_poster.pdf" }
+    ],
     "tags": ["machine-learning", "finance", "nlp", "ai-agents"]
   },
   {

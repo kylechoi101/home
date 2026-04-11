@@ -573,15 +573,32 @@
 
     function cardHTML(p){
       const tags = (p.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
+      
+      let linksHTML = '';
+      if (p.links && p.links.length > 0) {
+        linksHTML = p.links.map(l => `<a href="${l.url}" target="_blank" class="btn" style="padding: 6px 14px; font-size: 0.85rem;">${l.name}</a>`).join('');
+      } else if (p.url) {
+        linksHTML = `<a href="${p.url}" target="_blank" class="btn" style="padding: 6px 14px; font-size: 0.85rem;">View Project</a>`;
+      }
+
+      const mainUrl = p.links && p.links.length > 0 ? p.links[0].url : (p.url || '#');
+
       return `
-        <a href="${p.url || '#'}" target="_blank" class="card">
-          <img class="card-img" src="${p.image}" alt="${p.alt || p.title}" loading="lazy">
+        <div class="card">
+          <a href="${mainUrl}" target="_blank" style="display: block; text-decoration: none; color: inherit;">
+            <img class="card-img" src="${p.image}" alt="${p.alt || p.title}" loading="lazy">
+          </a>
           <div class="card-content">
-            <h3 class="card-title">${p.title}</h3>
+            <h3 class="card-title">
+              <a href="${mainUrl}" target="_blank" style="color: inherit; text-decoration: none;">${p.title}</a>
+            </h3>
             <p class="card-desc">${p.description || ''}</p>
+            <div style="display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;">
+              ${linksHTML}
+            </div>
             ${p.tags && p.tags.length ? `<div class="tags">${tags}</div>` : ''}
           </div>
-        </a>
+        </div>
       `;
     }
 
