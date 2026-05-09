@@ -1,6 +1,6 @@
 {
   "current_gpa": 3.758,
-  "cumulative_gpa": 3.666,
+  "cumulative_gpa": 3.630,
   "terms": [
     {
       "term": "Fall Qtr 2020",
@@ -51,6 +51,11 @@
       "term": "Fall Qtr 2025",
       "gpa": 3.603,
       "term_gpa": 3.666
+    },
+    {
+      "term": "Winter Qtr 2026",
+      "gpa": 3.630,
+      "term_gpa": 3.900
     }
   ],
   "coursework": [
