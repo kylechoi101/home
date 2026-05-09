@@ -1,5 +1,23 @@
 [
   {
+    "title": "Shorelife",
+    "description": "Daily California beach health forecasts built from official bacteria samples, coastal conditions, and model calibration—live beach explorer, methodology, and a transparent research roadmap.",
+    "image": "img/shorelife-thumb.png",
+    "links": [
+      { "name": "Live site", "url": "https://kylechoi101.github.io/surf-health/" },
+      { "name": "GitHub", "url": "https://github.com/kylechoi101/surf-health" }
+    ],
+    "tags": ["forecasting", "public-health", "full-stack", "machine-learning"]
+  },
+  {
+    "title": "Cross-Market Lead-Lag Research",
+    "description": "End-to-end pipeline testing whether US equities predict overnight moves in foreign markets via proxy ETFs—multi-market coupling scans with DSR, PBO, White’s Reality Check, and walk-forward validation (clean negative on tradable instruments).",
+    "image": "img/cross-market-lag-thumb.png",
+    "alt": "Stylized diagram of cross-region market nodes, phase-shifted return series, and a pair-coupling heatmap suggesting econometric lead–lag testing.",
+    "url": "https://github.com/kylechoi101/cross-market-lag-research",
+    "tags": ["finance", "time-series", "research", "validation"]
+  },
+  {
     "title": "Credit Analysis Agentic Workflow",
     "description": "Engineered a Cash Scoring XGBoost model achieving 86% ROC-AUC and an automated Agentic Workflow for feature creation. Built a transformer model to categorize bank statements with 95% accuracy.",
     "image": "img/poster-thumb.jpg",
