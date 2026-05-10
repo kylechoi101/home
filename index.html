@@ -259,7 +259,7 @@
       <p>I transform complex datasets into compelling narratives—from public beach health forecasts and MLB swing mechanics to cross-market finance research and macro portfolio valuation.</p>
       <div class="contact-actions" style="justify-content: center; margin-top: 32px;">
         <button id="emailBtn" class="btn btn-primary">Get in Touch</button>
-        <a href="./files/Resume.pdf" target="_blank" class="btn">View Resume</a>
+        <a href="./files/Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn">View Resume</a>
       </div>
     </section>
 
@@ -286,7 +286,7 @@
       </div>
       
       <div class="report-list">
-        <a href="./files/Mega_Trend.pdf" target="_blank" class="report-item">
+        <a href="./files/Mega_Trend.pdf" target="_blank" rel="noopener noreferrer" class="report-item">
           <div class="report-info">
             <h3>2025 Market Mega Trend</h3>
             <div class="report-meta">
@@ -298,7 +298,7 @@
           <svg class="report-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
         
-        <a href="./files/HMM.pdf" target="_blank" class="report-item">
+        <a href="./files/HMM.pdf" target="_blank" rel="noopener noreferrer" class="report-item">
           <div class="report-info">
             <h3>HMM Equity Research</h3>
             <div class="report-meta">
@@ -580,21 +580,21 @@
       
       let linksHTML = '';
       if (p.links && p.links.length > 0) {
-        linksHTML = p.links.map(l => `<a href="${l.url}" target="_blank" class="btn" style="padding: 6px 14px; font-size: 0.85rem;">${l.name}</a>`).join('');
+        linksHTML = p.links.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="btn" style="padding: 6px 14px; font-size: 0.85rem;">${l.name}</a>`).join('');
       } else if (p.url) {
-        linksHTML = `<a href="${p.url}" target="_blank" class="btn" style="padding: 6px 14px; font-size: 0.85rem;">View Project</a>`;
+        linksHTML = `<a href="${p.url}" target="_blank" rel="noopener noreferrer" class="btn" style="padding: 6px 14px; font-size: 0.85rem;">View Project</a>`;
       }
 
       const mainUrl = p.links && p.links.length > 0 ? p.links[0].url : (p.url || '#');
 
       return `
         <div class="card">
-          <a href="${mainUrl}" target="_blank" style="display: block; text-decoration: none; color: inherit;">
+          <a href="${mainUrl}" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; color: inherit;">
             <img class="card-img" src="${p.image}" alt="${p.alt || p.title}" loading="lazy">
           </a>
           <div class="card-content">
             <h3 class="card-title">
-              <a href="${mainUrl}" target="_blank" style="color: inherit; text-decoration: none;">${p.title}</a>
+              <a href="${mainUrl}" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">${p.title}</a>
             </h3>
             <p class="card-desc">${p.description || ''}</p>
             <div style="display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;">
