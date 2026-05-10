@@ -410,12 +410,16 @@
     };
 
     function renderGPA(gpaPayload){
-      const fmtGPA = (val) => (typeof val === 'number') ? val.toFixed(2) : '—';
+      /* Round up to one decimal for display (e.g. 3.63 → 3.7). */
+      const fmtGPADisplay = (val) =>
+        (typeof val === 'number' && isFinite(val))
+          ? (Math.ceil(val * 10) / 10).toFixed(1)
+          : '—';
       const current = (gpaPayload.current_gpa !== undefined) ? gpaPayload.current_gpa : gpaPayload.major_gpa;
       const cumulative = (gpaPayload.cumulative_gpa !== undefined) ? gpaPayload.cumulative_gpa : gpaPayload.overall_gpa;
 
-      document.getElementById('currentGPA').textContent = fmtGPA(current);
-      document.getElementById('cumulativeGPA').textContent = fmtGPA(cumulative);
+      document.getElementById('currentGPA').textContent = fmtGPADisplay(current);
+      document.getElementById('cumulativeGPA').textContent = fmtGPADisplay(cumulative);
 
       const tipSel = d3.select('#gpaTip');
 
@@ -479,7 +483,7 @@
       xAxis.select('.domain').attr('stroke', 'var(--grid)');
       xAxis.selectAll('text').style('font-family', 'var(--font-sans)').style('fill', 'var(--muted)').style('font-size', '10px');
 
-      const yAxis = g.append('g').call(d3.axisLeft(y).ticks(4).tickFormat(d3.format('.2f')).tickSize(-w));
+      const yAxis = g.append('g').call(d3.axisLeft(y).ticks(4).tickFormat(d3.format('.1f')).tickSize(-w));
       yAxis.select('.domain').remove();
       yAxis.selectAll('.tick line').attr('stroke', 'var(--grid)').attr('stroke-dasharray', '2,2');
       yAxis.selectAll('text').style('font-family', 'var(--font-sans)').style('fill', 'var(--muted)').style('font-size', '10px');
@@ -536,7 +540,7 @@
         .style('cursor', 'pointer')
         .style('transition', 'r 0.2s');
 
-      function fmt(v){ return (v == null || !isFinite(v)) ? '—' : v.toFixed(2); }
+      function fmt(v){ return fmtGPADisplay(v); }
 
       dots
         .on('mouseenter', function(evt, d){
