@@ -1,5 +1,27 @@
 [
   {
+    "title": "Moving the Wall",
+    "description": "Coupling detection between two noise-like streams—from baduk to Granger causality. Built an interactive paper with a playable 19×19 board, E1 predictor, 3D move-cloud, and animated walk-through of the theory. Proves that baduk's coupling lives past the linear-Gaussian wall via nonlinear local response.",
+    "image": "img/baduk-thumb.png",
+    "alt": "A Go/Baduk board overlaid with time-series coupling waveforms and transfer entropy notation.",
+    "links": [
+      { "name": "Interactive Paper", "url": "https://kylechoi101.github.io/baduk/" },
+      { "name": "PDF", "url": "https://kylechoi101.github.io/baduk/PAPER.pdf" },
+      { "name": "GitHub", "url": "https://github.com/kylechoi101/baduk" }
+    ],
+    "tags": ["time-series", "research", "information-theory", "interactive", "data-viz"]
+  },
+  {
+    "title": "Finding Novelty in Finding Novelty",
+    "description": "Discovered that prompting LLMs as named, published scholars speaking in the third person dramatically overcomes sycophancy and unlocks rigorous methodological critique. A controlled experiment comparing persona configurations led to the refutation of my own initial thesis—proving the method works.",
+    "image": "img/scholar-voice-thumb.png",
+    "alt": "A council of scholar silhouettes debating over a holographic research document with mathematical annotations.",
+    "links": [
+      { "name": "Paper (PDF)", "url": "files/scholar-voice-paper.pdf" }
+    ],
+    "tags": ["ai-research", "llm", "prompting", "methodology", "research"]
+  },
+  {
     "title": "Shorelife",
     "description": "Daily California beach health forecasts built from official bacteria samples, coastal conditions, and model calibration—live beach explorer, methodology, and a transparent research roadmap.",
     "image": "img/shorelife-thumb.png",
