@@ -3,7 +3,7 @@
 ## 2026-09-21 — Reposition for Applied ML / AI Engineer roles
 
 - Hero, title, meta, og tags rewritten from "Data Science × Finance" to Applied ML / AI engineer; added social image `img/og.jpg`.
-- Resume swapped to `files/Resume_Kyle_Choi_2026-09.pdf` (from `~/Job/Resume_Kyle_Choi_v4.pdf`, 2026-09-19); old July resume removed.
+- Resume swapped to `files/Resume_Kyle_Choi_2026-09-21.pdf` (from `~/Job/Resume_Kyle_Choi_generic.pdf`, 2026-09-21); old July resume removed.
 - `projects.json` rewritten to 7 cards, ordered Shorelife, XOXO, Prism Data, Named-Scholar Councils, Baduk, Cross-Market, MLB. Every metric traces to `~/Job/Master_Resume.pdf`, the live Shorelife health endpoint, or the repo READMEs. Balanced Meal, Mega Trend and HMM cards dropped (the two PDFs stay in Finance Research).
 - Tag filter dropdown replaced by chips; tags reduced to a fixed small set.
 - New Writing section linking the XOXO blog post (kylechoi101.github.io/xoxo-blog).
