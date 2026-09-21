@@ -458,10 +458,10 @@
     };
 
     function renderGPA(gpaPayload){
-      /* Two decimals, no rounding up. */
+      /* One decimal, rounded up to match the resume (3.758 → 3.8, 3.63 → 3.7). */
       const fmtGPADisplay = (val) =>
         (typeof val === 'number' && isFinite(val))
-          ? val.toFixed(2)
+          ? (Math.ceil(val * 10) / 10).toFixed(1)
           : '—';
       const current = (gpaPayload.current_gpa !== undefined) ? gpaPayload.current_gpa : gpaPayload.major_gpa;
       const cumulative = (gpaPayload.cumulative_gpa !== undefined) ? gpaPayload.cumulative_gpa : gpaPayload.overall_gpa;
