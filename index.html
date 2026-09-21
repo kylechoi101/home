@@ -4,11 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg" />
-  <title>Kyle Choi · Data Science & Finance</title>
-  <meta name="description" content="Portfolio of Kyle Choi — data science, finance, time-series coupling theory (Moving the Wall), AI research methodology, forecasting (Shorelife), cross-market research, and interactive web projects." />
-  <meta property="og:title" content="Kyle Choi · Portfolio" />
-  <meta property="og:description" content="Data science, finance, time-series coupling research, AI methodology, and interactive projects — Moving the Wall, Shorelife, markets research, visuals." />
+  <title>Kyle Choi · Applied ML / AI Engineer</title>
+  <meta name="description" content="Kyle Choi, Applied ML / AI engineer in San Francisco. Shorelife beach-health forecasting live on the App Store with daily retraining, LLM evaluation harnesses, credit-risk models, and finance research." />
+  <meta property="og:title" content="Kyle Choi · Applied ML / AI Engineer" />
+  <meta property="og:description" content="I build ML systems end to end: beach-health forecasting live on the App Store, LLM evaluation harnesses, credit-risk models." />
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kylechoi101.github.io/home/" />
+  <meta property="og:image" content="https://kylechoi101.github.io/home/img/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="theme-color" content="#0b0f14" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self';" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -112,6 +115,11 @@
     .nav-links { display: flex; gap: 20px; align-items: center; }
     .nav-links a { color: var(--muted); font-weight: 500; font-size: 0.95rem; }
     .nav-links a:hover { color: var(--ink); }
+    @media (max-width: 480px) {
+      .nav-links { gap: 12px; }
+      .nav-links a { font-size: 0.85rem; }
+      .nav-brand { font-size: 1.1rem; }
+    }
 
     /* Buttons */
     .btn {
@@ -190,7 +198,16 @@
     .filter-select { appearance: none; padding: 8px 36px 8px 16px; border-radius: 999px; background: var(--panel) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%238b9cb6"><path d="M4 6l4 4 4-4z"/></svg>') no-repeat right 12px center; border: 1px solid var(--grid); color: var(--ink); font-family: inherit; font-size: 0.9rem; cursor: pointer; transition: border-color 0.2s; }
     .filter-select:hover, .filter-select:focus { border-color: var(--accent); outline: none; }
 
-    /* Equity Research List */
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+    .chip { padding: 6px 14px; border-radius: 999px; background: var(--panel); border: 1px solid var(--grid); color: var(--muted); font-family: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .chip:hover { border-color: var(--accent); color: var(--ink); }
+    .chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .hero-meta { margin: 20px auto 0; color: var(--muted); font-size: 1rem; }
+    .social { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 20px; font-size: 0.95rem; font-weight: 500; }
+    .social a { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); }
+    .social a:hover { color: var(--accent); }
+
+    /* Research / Writing List */
     .report-list { display: flex; flex-direction: column; gap: 16px; }
     .report-item {
       display: flex;
@@ -246,8 +263,9 @@
       <a href="#" class="nav-brand">Kyle Choi</a>
       <div class="nav-links">
         <a href="#projects">Work</a>
-        <a href="#equity">Research</a>
-        <a href="#academics">Academics</a>
+        <a href="#writing">Writing</a>
+        <a href="#equity">Finance</a>
+        <a href="#academics">Education</a>
         <button id="themeToggle" class="btn" style="padding: 8px; border-radius: 50%; width: 36px; height: 36px; border:none; background: transparent; color: var(--ink);" aria-pressed="false" title="Toggle theme">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
         </button>
@@ -257,34 +275,55 @@
 
   <main>
     <section class="container hero">
-      <h1>Data Science × Finance</h1>
-      <p>I transform complex datasets into compelling narratives—from time-series coupling theory and AI research methodology to public health forecasting, cross-market finance research, and interactive data visualization.</p>
-      <div class="contact-actions" style="justify-content: center; margin-top: 32px;">
+      <h1>I build ML systems end to end.</h1>
+      <p>Applied ML / AI engineer in San Francisco, B.S. Data Science from UC San Diego (2026). I ship models to production: a beach-health forecasting app live on the App Store with daily retraining, LLM evaluation harnesses, and credit-risk models built with Prism Data.</p>
+      <p class="hero-meta">Open to full-time Applied ML / AI Engineer roles.</p>
+      <div class="contact-actions" style="justify-content: center; margin-top: 24px;">
         <button id="emailBtn" class="btn btn-primary">Get in Touch</button>
-        <a href="./files/Resume_Kyle_CHoi.pdf" target="_blank" rel="noopener noreferrer" class="btn">View Resume</a>
+        <a href="./files/Resume_Kyle_Choi_2026-09.pdf" target="_blank" rel="noopener noreferrer" class="btn">View Resume</a>
+      </div>
+      <div class="social">
+        <a href="https://github.com/kylechoi101" target="_blank" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.1c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.55C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>GitHub</a>
+        <a href="https://linkedin.com/in/kylechoidsc" target="_blank" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>LinkedIn</a>
+        <a href="https://kylechoi101.github.io/xoxo-blog/" target="_blank" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Writing</a>
       </div>
     </section>
 
     <section id="projects" class="container">
       <div class="section-header">
-        <h2 class="section-title">Featured Projects</h2>
-        <p class="section-subtitle">A selection of my recent data science and visualization work.</p>
+        <h2 class="section-title">Projects</h2>
+        <p class="section-subtitle">Shipped products first, then research. Every number links to the code, paper, or live endpoint behind it.</p>
       </div>
-      
-      <div class="filter-wrap">
-        <span style="color:var(--muted); font-size: 0.9rem; font-weight: 500;">Filter by topic:</span>
-        <select id="tagFilter" class="filter-select" aria-label="Filter projects by tag">
-          <option value="all">All Projects</option>
-        </select>
-      </div>
+
+      <div id="tagChips" class="chips" role="group" aria-label="Filter projects by topic"></div>
       
       <div id="projectsGrid" class="grid"></div>
     </section>
 
+    <section id="writing" class="container">
+      <div class="section-header">
+        <h2 class="section-title">Writing</h2>
+        <p class="section-subtitle">Long-form write-ups of what I built and what the data said.</p>
+      </div>
+      <div class="report-list">
+        <a href="https://kylechoi101.github.io/xoxo-blog/" target="_blank" rel="noopener noreferrer" class="report-item">
+          <div class="report-info">
+            <h3>I played on Apple’s Playground so you don’t have to</h3>
+            <div class="report-meta">
+              <span class="file-badge" style="background:rgba(88,166,255,0.1); color:var(--accent);">Blog</span>
+              <span>Sep 2026</span>
+              <span>• 1,489 Image Playground drawings, every prompt, and the scoring behind XOXO</span>
+            </div>
+          </div>
+          <svg class="report-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </section>
+
     <section id="equity" class="container">
       <div class="section-header">
-        <h2 class="section-title">Equity Research</h2>
-        <p class="section-subtitle">Deep dive fundamental analysis and valuation models.</p>
+        <h2 class="section-title">Finance Research</h2>
+        <p class="section-subtitle">Fundamental equity research and a published quant negative result. CFA Levels I and II passed; Level III result pending.</p>
       </div>
       
       <div class="report-list">
@@ -323,24 +362,13 @@
           </div>
           <svg class="report-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-
-        <div class="report-item disabled">
-          <div class="report-info">
-            <h3>Tech Sector Analysis</h3>
-            <div class="report-meta">
-              <span class="file-badge" style="background:var(--grid); color:var(--muted);">Draft</span>
-              <span>Coming Soon</span>
-              <span>• Equity Valuation</span>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 
     <section id="academics" class="container">
       <div class="section-header">
-        <h2 class="section-title">Academic Excellence</h2>
-        <p class="section-subtitle">Quantitative foundation built through rigorous coursework.</p>
+        <h2 class="section-title">Education</h2>
+        <p class="section-subtitle">B.S. Data Science, University of California San Diego, June 2026. Awards: HDSI Best Visualization Project, Rady Advanced Fundamental Equity Valuation Tournament.</p>
       </div>
 
       <div class="metrics">
@@ -356,7 +384,7 @@
 
       <div class="chart-container">
         <div class="chart-header">
-          <h3 class="chart-title">Academic Performance Trend</h3>
+          <h3 class="chart-title">Cumulative GPA by quarter</h3>
         </div>
         <svg id="gpaSpark" width="100%" height="180" role="img" aria-label="GPA trend over terms"></svg>
       </div>
@@ -370,7 +398,13 @@
 
   <footer>
     <div class="container">
-      <p>© <span id="year"></span> Kyle Choi. All rights reserved.</p>
+      <div class="social" style="margin: 0 0 16px;">
+        <a href="https://github.com/kylechoi101" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://linkedin.com/in/kylechoidsc" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://kylechoi101.github.io/xoxo-blog/" target="_blank" rel="noopener noreferrer">Blog</a>
+        <a href="./files/Resume_Kyle_Choi_2026-09.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+      </div>
+      <p>© <span id="year"></span> Kyle Choi · San Francisco, CA</p>
     </div>
   </footer>
 
@@ -424,10 +458,10 @@
     };
 
     function renderGPA(gpaPayload){
-      /* Round up to one decimal for display (e.g. 3.63 → 3.7). */
+      /* Two decimals, no rounding up. */
       const fmtGPADisplay = (val) =>
         (typeof val === 'number' && isFinite(val))
-          ? (Math.ceil(val * 10) / 10).toFixed(1)
+          ? val.toFixed(2)
           : '—';
       const current = (gpaPayload.current_gpa !== undefined) ? gpaPayload.current_gpa : gpaPayload.major_gpa;
       const cumulative = (gpaPayload.cumulative_gpa !== undefined) ? gpaPayload.cumulative_gpa : gpaPayload.overall_gpa;
@@ -587,7 +621,8 @@
   /* Projects Script */
   (function(){
     const grid = document.getElementById('projectsGrid');
-    const filter = document.getElementById('tagFilter');
+    const chips = document.getElementById('tagChips');
+    const label = t => t === 'all' ? 'All' : t.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()).replace('Ml ', 'ML ').replace('Llm', 'LLM').replace('Ios', 'iOS');
 
     function cardHTML(p){
       const tags = (p.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
@@ -628,14 +663,17 @@
     }
 
     function init(projects){
-      const tags = Array.from(new Set(projects.flatMap(p => p.tags || []))).sort();
+      const tags = ['all', ...Array.from(new Set(projects.flatMap(p => p.tags || []))).sort()];
       tags.forEach(t => {
-        const opt = document.createElement('option');
-        opt.value = t; opt.textContent = t.charAt(0).toUpperCase() + t.slice(1);
-        filter.appendChild(opt);
+        const b = document.createElement('button');
+        b.type = 'button'; b.className = 'chip' + (t === 'all' ? ' active' : ''); b.dataset.tag = t; b.textContent = label(t);
+        b.addEventListener('click', () => {
+          chips.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c === b));
+          render(projects, t);
+        });
+        chips.appendChild(b);
       });
       render(projects);
-      filter.addEventListener('change', () => render(projects, filter.value));
     }
 
     fetch('projects.json')
