@@ -28,6 +28,47 @@
     ]
   },
   {
+    "title": "Slop Store: The App Store for AI-Made Apps",
+    "description": "A store where people and their coding agents publish the apps they vibe-coded, playable right in the browser. Publishing is one command (npx slopstore publish), a Claude Code plugin, or an MCP server with 17 tools behind OAuth, and it covers web, Expo, Flutter and Capacitor apps. Built on Cloudflare Workers, D1, KV and Hono with server-side rendering; launched October 2026.",
+    "image": "img/slopstore-thumb.jpg",
+    "alt": "Slop Store home page",
+    "links": [
+      {
+        "name": "Live site",
+        "url": "https://slopapp.store"
+      },
+      {
+        "name": "npm",
+        "url": "https://www.npmjs.com/package/slopstore"
+      }
+    ],
+    "tags": [
+      "llm",
+      "web"
+    ]
+  },
+  {
+    "title": "Vincent: A Companion App for a Foldable iPhone",
+    "description": "Built in about three hours with teammate Zahar Bernyk at Bitrig Hacks: iPhone Duo Edition (Sep 2026, 73 entries). A SwiftUI app for a two-screen foldable iPhone, painted in Van Gogh's style. Closed, it listens to how your day went with on-device speech-to-text. Open, Apple's on-device Foundation Models reply in text and build a plan: gentle advice, clarifying questions, and a roadmap of checkpoints that turn into paintings to color. Stood up on the nightstand, it becomes a table clock with calming music that fades out instead of an alarm. The demo is recorded from the running app.",
+    "image": "img/vincent-thumb-v2.jpg",
+    "video": "img/vincent-demo-v3.mp4",
+    "alt": "Vincent running on the iPhone Duo simulator: listening, talking, planning and resting",
+    "links": [
+      {
+        "name": "Devpost",
+        "url": "https://devpost.com/software/vincent-sjcrbo"
+      },
+      {
+        "name": "GitHub",
+        "url": "https://github.com/fold-ai/ycapp"
+      }
+    ],
+    "tags": [
+      "ios",
+      "llm"
+    ]
+  },
+  {
     "title": "XOXO: On-Device Generative Avatars",
     "description": "SwiftUI and CloudKit app where partners share a mood as a face drawn fully on-device by Apple Image Playground. I built a prompt-evaluation harness that scores mood differentiation against identity drift with Vision feature prints, and ran rounds on 4 iPhones across 2 iOS releases with XCUITest. v1.0 is in App Review; the write-up covers all 1,489 drawings.",
     "image": "img/xoxo-thumb.jpg",

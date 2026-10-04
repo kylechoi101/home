@@ -609,6 +609,24 @@
       text-transform: uppercase;
       fill: var(--muted);
     }
+    .card-media { position: relative; }
+    .play-badge {
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -60%);
+      width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center;
+      background: rgba(9, 12, 16, 0.6); color: #fff; font-size: 20px; padding-left: 4px;
+      backdrop-filter: blur(6px); transition: transform .2s ease;
+    }
+    .card:hover .play-badge { transform: translate(-50%, -60%) scale(1.08); }
+    .video-dialog {
+      border: 1px solid var(--grid); border-radius: var(--radius); padding: 0; overflow: hidden;
+      background: var(--panel); color: var(--ink); width: min(960px, calc(100vw - 32px)); max-height: calc(100vh - 32px);
+      box-shadow: var(--shadow-hover);
+    }
+    .video-dialog::backdrop { background: rgba(0, 0, 0, 0.7); }
+    .video-dialog video { display: block; width: 100%; max-height: calc(100vh - 140px); background: #000; }
+    .video-dialog .video-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; flex-wrap: wrap; }
+    .video-dialog .video-title { font-weight: 600; }
+    .video-dialog .video-close { background: none; border: 0; color: var(--muted); font-size: 1rem; cursor: pointer; padding: 6px 8px; }
   </style>
 </head>
 
@@ -1030,15 +1048,20 @@
         }
 
         const mainUrl = p.links && p.links.length > 0 ? p.links[0].url : (p.url || '#');
+        // A project with a demo video shows a still on the card; clicking the image or title plays the video in a dialog.
+        const open = p.video
+          ? `href="#" data-video="${p.video}" data-title="${p.title}"`
+          : `href="${mainUrl}" target="_blank" rel="noopener noreferrer"`;
+        const media = `<img class="card-img" src="${p.image}" alt="${p.alt || p.title}" loading="lazy">${p.video ? '<span class="play-badge" aria-hidden="true">&#9654;</span>' : ''}`;
 
         return `
         <div class="card">
-          <a href="${mainUrl}" target="_blank" rel="noopener noreferrer" style="display: block; text-decoration: none; color: inherit;">
-            <img class="card-img" src="${p.image}" alt="${p.alt || p.title}" loading="lazy">
+          <a ${open} class="card-media" style="display: block; text-decoration: none; color: inherit;">
+            ${media}
           </a>
           <div class="card-content">
             <h3 class="card-title">
-              <a href="${mainUrl}" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">${p.title}</a>
+              <a ${open} style="color: inherit; text-decoration: none;">${p.title}</a>
             </h3>
             <p class="card-desc">${p.description || ''}</p>
             <div style="display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;">
@@ -1088,6 +1111,42 @@
       if (btn) {
         btn.addEventListener('click', () => { window.location.href = 'mailto:' + addr; });
       }
+    })();
+  </script>
+
+  <dialog class="video-dialog" id="videoDialog" aria-label="Project demo">
+    <video id="videoDialogPlayer" controls muted playsinline preload="none"></video>
+    <div class="video-foot">
+      <span class="video-title" id="videoDialogTitle"></span>
+      <span style="display:flex;gap:8px;align-items:center;">
+        <a id="videoDialogLink" class="btn" target="_blank" rel="noopener noreferrer" style="padding: 6px 14px; font-size: 0.85rem;">Devpost</a>
+        <button type="button" class="video-close" id="videoDialogClose" aria-label="Close video">Close</button>
+      </span>
+    </div>
+  </dialog>
+  <script>
+    (function () {
+      const dlg = document.getElementById('videoDialog');
+      const player = document.getElementById('videoDialogPlayer');
+      const link = document.getElementById('videoDialogLink');
+      const title = document.getElementById('videoDialogTitle');
+      document.addEventListener('click', e => {
+        const a = e.target.closest('a[data-video]');
+        if (!a) return;
+        e.preventDefault();
+        const card = a.closest('.card');
+        const devpost = card && [...card.querySelectorAll('.card-content .btn')].find(b => /devpost/i.test(b.textContent));
+        link.hidden = !devpost;
+        if (devpost) { link.href = devpost.href; link.textContent = devpost.textContent; }
+        title.textContent = a.dataset.title.split(':')[0];
+        player.src = a.dataset.video;
+        dlg.showModal();
+        player.play().catch(() => {});
+      });
+      const close = () => { player.pause(); dlg.close(); };
+      document.getElementById('videoDialogClose').addEventListener('click', close);
+      dlg.addEventListener('click', e => { if (e.target === dlg) close(); });
+      dlg.addEventListener('close', () => { player.pause(); player.removeAttribute('src'); player.load(); });
     })();
   </script>
 </body>
